@@ -24,6 +24,7 @@ async function convertToVsCode(destAgents, destBase) {
         content = content.replace(/\.\/\.agents\/skills\//g, './.copilot-skills/');
         content = content.replace(/\.\/\.agents\/vault\//g, './.copilot-vault/');
         content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
+        content = content.replace(/\.\/\.agents\/VAULT_INDEX\.md/g, './.github/VAULT_INDEX.md');
         content = content.replace(/\{skill-name\}\/SKILL\.md/g, '{skill-name}.md'); // Para buscar arquivos achatados invés de diretórios
 
         // Trocar sintaxe bruta de trigger pelo ApplyTo nativo

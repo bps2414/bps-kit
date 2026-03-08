@@ -5,6 +5,10 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.16] - 2026-03-08
+### Corrigido
+- Sincronização dos Paths Estáticos: O template global do projeto (`GEMINI.md`) possuía vestígios do path absoluto de leitura desvinculadas às regras autônomas implementadas para instâncias individuais. Isto estava impedindo o construtor regex do backend (`convert_to_vscode.js`) de ler e traduzir os caminhos originais em caminhos ocultados apropriados para lidar com o GitHub Copilot Agent.
+
 ## [1.0.15] - 2026-03-08
 ### Corrigido
 - Eliminado Overhead Brutal (+66 Referências Vias Copilot) mudando os Markdowns de Skills ativas para uma pasta raiz independente `.copilot-skills/` em vez de abrigá-las no escopo autônomo do `.github/`.
