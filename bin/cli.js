@@ -40,6 +40,14 @@ async function runInstaller() {
     const spinner = ora('Montando diretórios base...').start();
 
     try {
+        if (options.vscode && await fs.pathExists(path.join(DEST_BASE, '.github'))) {
+            spinner.warn(chalk.yellow('Aviso: Pasta .github detectada. Os artefatos do Copilot serão sobrescritos se existirem.'));
+            spinner.start('Montando diretórios base...');
+        } else if (!options.vscode && await fs.pathExists(DEST_AGENTS)) {
+            spinner.warn(chalk.yellow('Aviso: Pasta .agents já existe. O BPS Kit a sobrescreverá.'));
+            spinner.start('Montando diretórios base...');
+        }
+
         // 1. Setup Base Directories
         await fs.ensureDir(DEST_AGENTS);
 
@@ -112,7 +120,11 @@ async function runInstaller() {
         console.log(chalk.cyan('======================================================'));
 
         console.log(chalk.yellow('\n💡 Next Steps:'));
-        console.log(chalk.white('1. O sistema Antigravity já deve estar lendo o `.agents/rules/GEMINI.md`.'));
+        if (options.vscode) {
+            console.log(chalk.white('1. O GitHub Copilot Agent já deve estar lendo o `.github/copilot-instructions.md`.'));
+        } else {
+            console.log(chalk.white('1. O sistema Antigravity já deve estar lendo o `.agents/rules/GEMINI.md`.'));
+        }
         console.log(chalk.white('2. Para auto-calibrar a sua IA baseada nos arquivos deste repositório, basta pedir para ele:\n'));
         console.log(chalk.dim('   "Rode a workflow setup-brain para otimizar minhas skills neste projeto"'));
         console.log('\n🌟 Boa codificação estruturada!\n');

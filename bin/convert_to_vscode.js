@@ -66,18 +66,34 @@ ${content}`;
         await fs.move(vaultSrc, copilotVaultDir, { overwrite: true });
     }
 
-    // 5. Consolidar as 20 personas (AGENTS) num unico arquivao master na root do github chamado AGENTS.md
+    // 5. Mover as 20 personas (AGENTS) para a pasta especializada do Copilot `.github/agents/`
     const agentsSrc = path.join(destAgents, 'agents');
+    const copilotAgentsDir = path.join(gitHubDir, 'agents');
     if (await fs.pathExists(agentsSrc)) {
+        await fs.ensureDir(copilotAgentsDir);
         const agentFiles = await fs.readdir(agentsSrc);
-        let consolidatedAgents = `# 🤖 Antigravity Copilot Agents Roster\n\n`;
         for (const agent of agentFiles) {
             if (agent.endsWith('.md')) {
                 const content = await fs.readFile(path.join(agentsSrc, agent), 'utf8');
-                consolidatedAgents += `\n## Agent: ${agent.replace('.md', '')}\n${content}\n---\n`;
+                // Adicionando a extensão recomendada .agent.md se necessario, mas o VSCode aceita .md na pasta /agents
+                await fs.writeFile(path.join(copilotAgentsDir, agent), content);
             }
         }
-        await fs.writeFile(path.join(gitHubDir, 'AGENTS.md'), consolidatedAgents);
+    }
+
+    // 6. Converter Workflows em Copilot Prompts locados em `.github/prompts/`
+    const workflowsSrc = path.join(destAgents, 'workflows');
+    const copilotPromptsDir = path.join(gitHubDir, 'prompts');
+    if (await fs.pathExists(workflowsSrc)) {
+        await fs.ensureDir(copilotPromptsDir);
+        const workflowFiles = await fs.readdir(workflowsSrc);
+        for (const workflow of workflowFiles) {
+            if (workflow.endsWith('.md')) {
+                const content = await fs.readFile(path.join(workflowsSrc, workflow), 'utf8');
+                // O copilot aceita prompts em .github/prompts/{name}.prompt.md
+                await fs.writeFile(path.join(copilotPromptsDir, workflow.replace('.md', '.prompt.md')), content);
+            }
+        }
     }
 
     // Limpeza pesada! Como o ambiente ja foi migrado de .agents para .github e .copilot-vault, delete a origem da instalacao hibrida.

@@ -5,6 +5,12 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.11] - 2026-03-08
+### Corrigido
+- Expurgo do `node_modules/` do tracking source do sistema de repositórios do Git.
+- Refinamentos drásticos na estrutura nativa tratada do Copilot (`--vscode` flag): Personas (Agents) baseadas em sistema consolidado foram re-desmembradas e alocadas organicamente em `.github/agents/`. Workflows foram mapeadas em `.github/prompts/*.prompt.md`.
+- Instaladores agora emitem alertas amarelos prevenidos na interface se estiverem sobrescrevendo diretórios (`.agents/` ou `.github/`) previamente rastreados durante um setup de perfil repetido.
+
 ## [1.0.10] - 2026-03-08
 ### Corrigido
 - Resolução do erro `MODULE_NOT_FOUND` reportado ao disparar a CLI contendo as flags combinadas de `--extra` / `--basic` e `--vscode`.
