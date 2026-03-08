@@ -75,8 +75,17 @@ ${content}`;
         for (const agent of agentFiles) {
             if (agent.endsWith('.md')) {
                 const content = await fs.readFile(path.join(agentsSrc, agent), 'utf8');
-                // Adicionando a extensão recomendada .agent.md se necessario, mas o VSCode aceita .md na pasta /agents
-                await fs.writeFile(path.join(copilotAgentsDir, agent), content);
+                const agentName = agent.replace('.md', '');
+
+                // Formato exigido para GitHub Copilot Agents (.agent.md)
+                const vsCodeAgentContent = `---
+description: 'Agente especializado: ${agentName}. Use para tarefas relacionadas a esse domínio.'
+tools: []
+---
+${content}`;
+
+                // Adicionando a extensão exigida .agent.md
+                await fs.writeFile(path.join(copilotAgentsDir, `${agentName}.agent.md`), vsCodeAgentContent);
             }
         }
     }
@@ -90,8 +99,16 @@ ${content}`;
         for (const workflow of workflowFiles) {
             if (workflow.endsWith('.md')) {
                 const content = await fs.readFile(path.join(workflowsSrc, workflow), 'utf8');
+                const promptName = workflow.replace('.md', '');
+
+                // Formato exigido para GitHub Copilot Prompts (.prompt.md)
+                const vsCodePromptContent = `---
+agent: agent
+---
+${content}`;
+
                 // O copilot aceita prompts em .github/prompts/{name}.prompt.md
-                await fs.writeFile(path.join(copilotPromptsDir, workflow.replace('.md', '.prompt.md')), content);
+                await fs.writeFile(path.join(copilotPromptsDir, `${promptName}.prompt.md`), vsCodePromptContent);
             }
         }
     }

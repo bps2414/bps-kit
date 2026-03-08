@@ -5,6 +5,12 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.12] - 2026-03-08
+### Adicionado
+- Script conversor do VS Code agora transcreve dinamicamente blocos de Frontmatter YAML embutindo o parâmetro `description` e array vazio em `tools: []` para os Agentes Extraídos.
+- Adicionado injeção do cabeçalho de metadados `agent: agent` nas extensões processadas do Copilot Prompts.
+- Troca forçada da extensão canônica geradora de `.md` para `.agent.md` e `.prompt.md`.
+
 ## [1.0.11] - 2026-03-08
 ### Corrigido
 - Expurgo do `node_modules/` do tracking source do sistema de repositórios do Git.
