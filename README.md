@@ -69,4 +69,6 @@ O **BPS Kit** deve sua fundação brilhante e seu mar enciclopédico de regras a
 O **BPS Kit** une esse conhecimento através de engenharias de "Auto Routing" contornando os limites de Tokens. Sem vudovn e sickn33, essa maravilha não funcionaria. 
 
 ---
-_Licença: MIT_
+## 📄 Licença
+
+Este projeto é licenciado sob a **MIT License** — veja o arquivo [LICENSE](./LICENSE) para detalhes.
