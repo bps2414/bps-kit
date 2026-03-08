@@ -67,16 +67,16 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
 ## 🧠 Skill Auto-Routing System (v8.0.0 — Vault Edition)
 
 ### Architecture
-- **Active skills** (~65): in `./.agents/antigravity/skills/` — always in context
-- **Vault skills** (~1200+): in `./.agents/antigravity/vault/` — discoverable via index
+- **Active skills** (~65): in `./.agents/skills/` — always in context
+- **Vault skills** (~1200+): in `./.agents/vault/` — discoverable via index
 
 ### Core Rule — Skills First
 After invoking any skill, explicitly say: '📖 Using skill: [skill-name]' before proceeding. If no skill was used, say: '⚠️ No skill used — responding from base knowledge.'
 
 ### Routing Flow
 1. Check if an **active skill** covers the request → use it directly
-2. If not → open `./.agents/antigravity/skills/VAULT_INDEX.md` to find a vault skill
-3. If found → `view_file ./.agents/antigravity/vault/{name}/SKILL.md`
+2. If not → open `./.agents/skills/VAULT_INDEX.md` to find a vault skill
+3. If found → `view_file ./.agents/vault/{name}/SKILL.md`
 4. If nothing found → respond from base knowledge
 
 ### Intent → Skill Routing Map (Active Skills)
