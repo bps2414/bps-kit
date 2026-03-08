@@ -5,6 +5,11 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.14] - 2026-03-08
+### Corrigido
+- O conversor de Copilot deixou de exportar **Skills** com a sintaxe `.instructions.md` munida de `applyTo: "**/*"`. Anteriormente, isso engatilhava o VS Code a injetar todos os 65 contextos do Antigravity na engine do Copilot de uma única vez, provocando erro letal na API GenAI (`128558 exceeds the limit of 128000`).
+- Skills exportadas via `--vscode` voltam a ser documentos `.md` puritanos em `.github/skills/nome.md`, encarregando o Copilot Agent de performar "file reads" inteligentes on-demand seguindo mapeamento semântico no próprio `copilot-instructions.md`.
+
 ## [1.0.13] - 2026-03-08
 ### Corrigido
 - Workflows exportadas para Copilot Prompts (`.github/prompts/`) agora processam sua integridade lexical e efetuam substituições completas via RegEx, trocando qualquer referência contextual de `GEMINI.md` ou `.agents/` para adequação na nuvem do Copilot (`copilot-instructions.md` e `.github/`).

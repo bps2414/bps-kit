@@ -20,43 +20,44 @@ async function convertToVsCode(destAgents, destBase) {
     if (await fs.pathExists(geminiPath)) {
         let content = await fs.readFile(geminiPath, 'utf8');
         // Adaptamos os caminhos na rule principal para o contexto do .github/ do VS Code
-        content = content.replace(/\.\/\.agents\/skills\//g, './.github/instructions/');
+        // Agora, skills são arquivos normais .md, preservando o auto-routing do Copilot e estourando tokens zero.
+        content = content.replace(/\.\/\.agents\/skills\//g, './.github/skills/');
         content = content.replace(/\.\/\.agents\/vault\//g, './.copilot-vault/');
         content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
+        content = content.replace(/\{skill-name\}\/SKILL\.md/g, '{skill-name}.md'); // Para buscar arquivos achatados invés de diretórios
 
         // As workflows no VS Code estao desabrigadas da pasta nativa, sugerimos le-las do vault ou inline
-        content += `\n\n## 🔄 Workflows Base\nAs workflows antigas de Cursor (/brainstorm, etc) agora devem ser invocadas naturalmente no chat: "Rode o fluxo de brainstorm". Consulte o AGENTS.md para contexto.\n`;
+        content += `\n\n## 🔄 Workflows Base\nAs workflows antigas de Cursor (/brainstorm, etc) agora devem ser invocadas naturalmente no chat: "Rode o fluxo de brainstorm". Consulte o diretório .github/prompts/ para contexto.\n`;
 
         await fs.writeFile(path.join(gitHubDir, 'copilot-instructions.md'), content);
     }
 
-    // 2. Converter as skills nativas (ativas) em glob .instructions.md
+    // 2. Converter as skills nativas (ativas) em arquivo comum .md achatado
+    // Importante: NÃO convertemos para .instructions.md pois o Copilot engoles todas no context limit estourando a IA! 
     const skillsDest = path.join(destAgents, 'skills');
+    const copilotSkillsDir = path.join(gitHubDir, 'skills');
+    await fs.ensureDir(copilotSkillsDir);
+
     if (await fs.pathExists(skillsDest)) {
         const skillsDirs = await fs.readdir(skillsDest);
         for (const skillName of skillsDirs) {
             const skillFile = path.join(skillsDest, skillName, 'SKILL.md');
             if (await fs.pathExists(skillFile)) {
                 let content = await fs.readFile(skillFile, 'utf8');
-
-                // Injetamos um frontmatter basico aceitavel pelo Copilot apontando para tudo (**/*) 
-                // para que a Skill ative independente do arquivo no Workspace se for convocada.
-                const vsCodeContent = `---
-description: ${skillName.replace(/-/g, ' ')}
-applyTo: "**/*"
----
-${content}`;
-                await fs.writeFile(path.join(copilotInstructionsDir, `${skillName}.instructions.md`), vsCodeContent);
+                // Salvar como .md comum achatado para a IA consultar dinamicamente via "file read" só quando requisitado
+                await fs.writeFile(path.join(copilotSkillsDir, `${skillName}.md`), content);
             }
         }
     }
 
-    // 3. Converter o Vault Index (Tudo que esta no index vira uma mera instruction text base local)
+    // 3. Converter o Vault Index (Tudo que esta no index vira uma instrução consultável)
     const vaultIndexSrc = path.join(destAgents, 'VAULT_INDEX.md');
     if (await fs.pathExists(vaultIndexSrc)) {
         let content = await fs.readFile(vaultIndexSrc, 'utf8');
         content = content.replace(/\.\/\.agents\/vault\//g, './.copilot-vault/');
-        await fs.writeFile(path.join(copilotInstructionsDir, 'VAULT_INDEX.instructions.md'), content);
+        // Também trocar eventuais menções de SKILL.md para o formato achatado.md do VSCode
+        content = content.replace(/\{name\}\/SKILL\.md/g, '{name}.md');
+        await fs.writeFile(path.join(gitHubDir, 'VAULT_INDEX.md'), content);
     }
 
     // 4. Mover o Vault inteiro para uma pasta customizada oculta que nao polua a base restrita do Git / do Copilot local
@@ -106,7 +107,7 @@ ${content}`;
                 content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
                 content = content.replace(/\.\/\.agents\//g, './.github/');
                 content = content.replace(/GEMINI\.md/g, 'copilot-instructions.md');
-                content = content.replace(/VAULT_INDEX\.md/g, 'VAULT_INDEX.instructions.md');
+                content = content.replace(/VAULT_INDEX\.md/g, 'VAULT_INDEX.md');
 
                 // Formato exigido para GitHub Copilot Prompts (.prompt.md)
                 const vsCodePromptContent = `---
