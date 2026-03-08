@@ -5,6 +5,13 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.17] - 2026-03-08
+### Corrigido
+- O script `convert_to_vscode.js` esvaziava os metadados e scripts em Python de `.copilot-skills/` durante o processo de migração por achatar ativamente e destrutivamente pastas em um `.md` individual. O conversor agora move a pasta preservando a sanidade estrutural e utilitária de cada *skill*.
+- Regex deficiente fazia com que as worklows base herdadas referissem-se à pastas extintas (`.github/skills`). Normalizado para ditar o ponteiro `.copilot-skills/`.
+- Deletado rastros estáticos e zumbis que persistiam a criar uma pasta `.github/instructions` vazia, causando confusão a usuários inspecionando o repositório.
+- A regra global *GEMINI* foi adequada para informar ao Copilot para ativamente ler (`view_file`) skills em vez de achar estáticamente que já estão no seu contexto (como era no pre-requisito original para a IDE Cursor).
+
 ## [1.0.16] - 2026-03-08
 ### Corrigido
 - Sincronização dos Paths Estáticos: O template global do projeto (`GEMINI.md`) possuía vestígios do path absoluto de leitura desvinculadas às regras autônomas implementadas para instâncias individuais. Isto estava impedindo o construtor regex do backend (`convert_to_vscode.js`) de ler e traduzir os caminhos originais em caminhos ocultados apropriados para lidar com o GitHub Copilot Agent.
