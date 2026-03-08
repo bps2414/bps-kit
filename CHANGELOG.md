@@ -5,6 +5,11 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.18] - 2026-03-08
+### Modificado
+- Universalização do *Lazy-Loading*: A instrução contida no template base `GEMINI.md` dizia que as habilidades (skills) na pasta raíz estariam "*always in context*" (sempre no contexto). Essa linha foi alterada para um comando forte que impõe as IAs nativas (Windsurf e Cursor) lerem a habilidade "explicitly read the SKILL.md file via file tools before using". Isso universaliza a redução de uso de Tokens Passivos (barrando possíveis alucinações de contexto) em todas as esferas e não apenas na arquitetura VS Code Copilot.
+- Com isso, o construtor do VS Code (`convert_to_vscode.js`) não precisa mais realizar uma conversão *custom* desta *string* especifica visto que a performance de token foi regularizada no template Global.
+
 ## [1.0.17] - 2026-03-08
 ### Corrigido
 - O script `convert_to_vscode.js` esvaziava os metadados e scripts em Python de `.copilot-skills/` durante o processo de migração por achatar ativamente e destrutivamente pastas em um `.md` individual. O conversor agora move a pasta preservando a sanidade estrutural e utilitária de cada *skill*.

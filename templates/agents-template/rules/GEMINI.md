@@ -67,7 +67,7 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
 ## 🧠 Skill Auto-Routing System (v8.0.0 — Vault Edition)
 
 ### Architecture
-- **Active skills** (~65): in `./.agents/skills/` — always in context
+- **Active skills** (~65): in `./.agents/skills/` — explicitly read the SKILL.md file via file tools before using
 - **Vault skills** (~1200+): in `./.agents/vault/` — discoverable via index
 
 ### Core Rule — Skills First

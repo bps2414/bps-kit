@@ -23,9 +23,6 @@ async function convertToVsCode(destAgents, destBase) {
         content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
         content = content.replace(/\.\/\.agents\/VAULT_INDEX\.md/g, './.github/VAULT_INDEX.md');
 
-        // Copilot precisa ser avisado de que as skills ativas agora requerem leitura ativa (view_file) fora da injecao limitante do contexto
-        content = content.replace(/— always in context/g, '— explicitly read the SKILL.md file via file tools before using');
-
         // Trocar sintaxe bruta de trigger pelo ApplyTo nativo
         content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**/*"');
 
