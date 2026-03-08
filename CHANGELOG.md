@@ -5,6 +5,10 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.13] - 2026-03-08
+### Corrigido
+- Workflows exportadas para Copilot Prompts (`.github/prompts/`) agora processam sua integridade lexical e efetuam substituições completas via RegEx, trocando qualquer referência contextual de `GEMINI.md` ou `.agents/` para adequação na nuvem do Copilot (`copilot-instructions.md` e `.github/`).
+
 ## [1.0.12] - 2026-03-08
 ### Adicionado
 - Script conversor do VS Code agora transcreve dinamicamente blocos de Frontmatter YAML embutindo o parâmetro `description` e array vazio em `tools: []` para os Agentes Extraídos.

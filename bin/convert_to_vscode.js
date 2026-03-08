@@ -98,8 +98,15 @@ ${content}`;
         const workflowFiles = await fs.readdir(workflowsSrc);
         for (const workflow of workflowFiles) {
             if (workflow.endsWith('.md')) {
-                const content = await fs.readFile(path.join(workflowsSrc, workflow), 'utf8');
+                let content = await fs.readFile(path.join(workflowsSrc, workflow), 'utf8');
                 const promptName = workflow.replace('.md', '');
+
+                // Converter referências visuais e lógicas residuais do Antigravity nativo 
+                // para o equivalente funcional da arquitetura VS Code.
+                content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
+                content = content.replace(/\.\/\.agents\//g, './.github/');
+                content = content.replace(/GEMINI\.md/g, 'copilot-instructions.md');
+                content = content.replace(/VAULT_INDEX\.md/g, 'VAULT_INDEX.instructions.md');
 
                 // Formato exigido para GitHub Copilot Prompts (.prompt.md)
                 const vsCodePromptContent = `---
