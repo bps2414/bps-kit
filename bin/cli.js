@@ -9,8 +9,10 @@ const { program } = require('commander');
 program
     .version('1.0.0')
     .description('BPS Kit Installer - The NextGen Modular AI Brain Setup')
-    .option('-n, --normal', 'Instala apenas as skills essenciais (39 skills, ideal para Web/React/Next)')
+    .option('-b, --basic', 'Modo economia extrema (11 skills apenas o core analítico, ideal para Copilot)')
+    .option('-n, --normal', 'Instala as skills essenciais (39 skills, ideal para Web/React/Next)')
     .option('-e, --extra', 'Instala as skills avançadas Premium (65 skills, inclui Python, QA, Cloud e Sec)')
+    .option('--vscode', 'Converte a estrutura final herdada do Cursor/Windsurf (.agents) para o formato do VS Code GitHub Copilot (.github)')
     .parse(process.argv);
 
 const options = program.opts();
@@ -27,10 +29,12 @@ async function runInstaller() {
 
     // Determinar o mode (default normal se nao passar args)
     let mode = 'normal';
-    if (options.extra) {
+    if (options.basic) {
+        mode = 'basic';
+    } else if (options.extra) {
         mode = 'extra';
-    } else if (!options.normal && !options.extra) {
-        console.log(chalk.yellow('⚠️  Nenhum perfil explicitado (--normal ou --extra). Utilizando default: --normal\\n'));
+    } else if (!options.normal && !options.extra && !options.basic) {
+        console.log(chalk.yellow('⚠️  Nenhum perfil explicitado (--basic, --normal ou --extra). Utilizando default: --normal\n'));
     }
 
     const spinner = ora('Montando diretórios base...').start();
@@ -78,25 +82,32 @@ async function runInstaller() {
 
         spinner.text = `Injetando pacotes de skills do perfil [${chalk.yellow(mode)}]...`;
 
-        // Primeiro copia normais
-        await fs.copy(
-            path.join(TEMPLATES_DIR, 'skills_normal'),
-            skillsDest
-        );
+        // Copiar pacote baseado no mode
+        if (mode === 'basic') {
+            await fs.copy(path.join(TEMPLATES_DIR, 'skills_basic'), skillsDest);
+        } else if (mode === 'normal') {
+            await fs.copy(path.join(TEMPLATES_DIR, 'skills_normal'), skillsDest);
+        } else if (mode === 'extra') {
+            await fs.copy(path.join(TEMPLATES_DIR, 'skills_normal'), skillsDest);
+            await fs.copy(path.join(TEMPLATES_DIR, 'skills_extra'), skillsDest);
+        }
 
-        // Se extra, copia as complementares
-        if (mode === 'extra') {
-            await fs.copy(
-                path.join(TEMPLATES_DIR, 'skills_extra'),
-                skillsDest
-            );
+        // 5. Conversor para VS Code se solicitado
+        if (options.vscode) {
+            spinner.text = `Transformando arquitetura para padrão GitHub Copilot (VS Code)...`;
+            const { convertToVsCode } = require('../src/scripts/convert_to_vscode');
+            await convertToVsCode(DEST_AGENTS, DEST_BASE);
         }
 
         spinner.succeed(chalk.green('Cérebro de IA instanciado com sucesso!'));
 
+        let finalCount = '39';
+        if (mode === 'basic') finalCount = '11';
+        if (mode === 'extra') finalCount = '65';
+
         console.log(chalk.cyan('\n============== [ RESUMO DA INSTALAÇÃO ] =============='));
         console.log(chalk.white(`Perfil Carregado : `) + chalk.greenBright(mode.toUpperCase()));
-        console.log(chalk.white(`Skills Ativas    : `) + chalk.greenBright(mode === 'extra' ? '65' : '39'));
+        console.log(chalk.white(`Skills Ativas    : `) + chalk.greenBright(finalCount));
         console.log(chalk.white(`Skills no Vault  : `) + chalk.greenBright('1197'));
         console.log(chalk.cyan('======================================================'));
 

@@ -9,17 +9,30 @@ Seu principal diferencial é o **Skill Vault System**: o sistema resolve o limit
 Você pode instanciar o "cérebro" da Inteligência Artificial em qualquer repositório executando o cli diretamente:
 
 ```bash
-# Para a stack Web tradicional (39 Skills ultra eficientes)
-npx bps-kit --normal
+# Modo Essencial (Windsurf/Cursor - Web/React/Next - 39 Skills)
+npx bps-kit@latest --normal
 
-# Para a stack Completa Avançada (65 Skills: Python, Pentest, DevOps, Data)
-npx bps-kit --extra
+# Modo Extra (Windsurf/Cursor - Clout/Sec/Python/QA - 65 Skills)
+npx bps-kit@latest --extra
+
+# Modo Economia Extrema (Windsurf/Cursor - Apenas 11 Skills Cognitivas)
+npx bps-kit@latest --basic
+
+# Integrar para VS Code (GitHub Copilot)
+# Adicione a flag --vscode com qualquer um dos perfis acima:
+npx bps-kit@latest --basic --vscode
 ```
 
-### O que acontece após a instalação?
+### O que acontece após a instalação? (Windsurf / Cursor)
 - A pasta `.agents/` será criada na raiz do seu repositório.
 - Nela residirá o seu `GEMINI.md` master, as pastas de `agents`, `scripts`, `workflows`, `skills` (Ativas) e `vault` (Inativas + Index).
-- A IA que ler sua base de código (ex: Antigravity no editor Windsurf ou Cursor) passará instantaneamente a obedecer essas diretrizes, possuindo validação lint e audit out-of-the-box.
+
+### O que acontece após a instalação? (VS Code / Copilot)
+Se você adicionou a flag `--vscode`, a arquitetura compilada será moldada paras as regras nativas da nuvem do GitHub:
+- As regras-materna e as Workflows irão para o `.github/copilot-instructions.md`.
+- As Skills ativas selecionadas receberão glob patterns (`applyTo: "**/*"`) com extensão `.instructions.md` dentro de `.github/instructions/`.
+- As 20 Personas originais serão fundidas no documento único `.github/AGENTS.md`.
+- E as outras milhares de skills irão para a pasta oculta de segurança `.copilot-vault/` para não saturar seu contexto do chat interno da IDE, além de um index traduzido.
 
 ### 🪄 Autocalibragem de Base de Código (Workflow Analyzer)
 O BPS Kit inclui uma workflow customizada! Após rodar o npx no projeto, apenas diga para a IA no seu chat:

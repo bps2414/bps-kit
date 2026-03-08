@@ -11,11 +11,19 @@ const SOURCE_BASE_WORKFLOWS_DIR = path.join(__dirname, '..', 'src', 'workflows')
 const SOURCE_RICH_SKILLS_DIR = path.join(SOURCE_GEMINI_DIR, 'antigravity', 'skills');
 
 const DEST_DIR = path.join(__dirname, '..', 'templates');
+const DEST_SKILLS_BASIC = path.join(DEST_DIR, 'skills_basic');
 const DEST_SKILLS_NORMAL = path.join(DEST_DIR, 'skills_normal');
 const DEST_SKILLS_EXTRA = path.join(DEST_DIR, 'skills_extra');
 const DEST_VAULT = path.join(DEST_DIR, 'vault');
 
 const SOURCE_WORKFLOWS_DIR = path.join(__dirname, '..', 'src', 'workflows');
+
+const BASIC_SKILLS = [
+    "behavioral-modes", "clean-code",
+    "brainstorming", "plan-writing", "executing-plans", "concise-planning",
+    "systematic-debugging", "verification-before-completion", "lint-and-validate",
+    "vulnerability-scanner", "git-pushing"
+];
 
 const NORMAL_SKILLS = [
     "brainstorming", "plan-writing", "executing-plans", "concise-planning", "clean-code",
@@ -66,6 +74,16 @@ async function copyTemplates() {
             await fs.copy(fallbackSrc, path.join(DEST_SKILLS_NORMAL, skill));
         } else {
             console.warn(`Missing normal skill: ${skill}`);
+        }
+    }
+
+    console.log("Copying Basic Skills...");
+    for (const skill of BASIC_SKILLS) {
+        const sourcePath = path.join(SOURCE_RICH_SKILLS_DIR, skill);
+        if (await fs.pathExists(sourcePath)) {
+            await fs.copy(sourcePath, path.join(DEST_SKILLS_BASIC, skill));
+        } else {
+            console.warn(`[WARN] Basic Skill not found in source: ${skill}`);
         }
     }
 

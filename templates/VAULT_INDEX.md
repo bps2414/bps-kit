@@ -1,7 +1,7 @@
 # 🗄️ Vault Index
 
-> 1197 skills in `./.agents/vault/`.
-> To use: `view_file ./.agents/vault/{skill-name}/SKILL.md`
+> 1197 skills in `./.agents/antigravity/vault/`.
+> To use: `view_file ./.agents/antigravity/vault/{skill-name}/SKILL.md`
 
 ## Web & Frontend (53)
 3d-web-experience angular angular-best-practices angular-migration angular-state-management angular-ui-patterns animejs-animation antigravity-design-expert antigravity-workflows baseline-ui chrome-extension-developer cloudflare-workers-expert design-md design-orchestration design-spells frontend-dev-guidelines frontend-mobile-development-component-scaffold frontend-mobile-security-xss-scan frontend-security-coder frontend-slides frontend-ui-dark-ts html-injection-testing nextjs-app-router-patterns radix-ui-design-system react-best-practices react-flow-architect react-flow-node-ts react-modernization react-native-architecture react-nextjs-development react-state-management react-ui-patterns spline-3d-integration tailwind-design-system threejs-animation threejs-fundamentals threejs-geometry threejs-interaction threejs-lighting threejs-loaders threejs-materials threejs-postprocessing threejs-shaders threejs-skills threejs-textures ui-skills ui-ux-pro-max ui-visual-validator web-artifacts-builder web-design-guidelines web-scraper web-security-testing webflow-automation
