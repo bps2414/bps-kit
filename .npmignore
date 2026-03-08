@@ -1,6 +1,8 @@
-src/
-scripts/
-.agents/
+/src/
+/scripts/
+/.agents/
 fix_paths.js
 test-install/
 test-install2/
+!templates/.agents/
+!templates/.agents/**
