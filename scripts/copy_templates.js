@@ -46,7 +46,7 @@ async function copyTemplates() {
     await fs.emptyDir(DEST_DIR);
 
     console.log("Copying GEMINI.md...");
-    const ruleDest = path.join(DEST_DIR, '.agents', 'rules', 'GEMINI.md');
+    const ruleDest = path.join(DEST_DIR, 'agents-template', 'rules', 'GEMINI.md');
     await fs.copy(SOURCE_RULE_FILE, ruleDest);
 
     let ruleContent = await fs.readFile(ruleDest, 'utf8');
@@ -97,20 +97,20 @@ async function copyTemplates() {
 
     console.log("Copying Agents and Scripts...");
     if (await fs.pathExists(SOURCE_AGENTS_DIR)) {
-        await fs.copy(SOURCE_AGENTS_DIR, path.join(DEST_DIR, '.agents', 'agents'));
+        await fs.copy(SOURCE_AGENTS_DIR, path.join(DEST_DIR, 'agents-template', 'agents'));
     }
     if (await fs.pathExists(SOURCE_SCRIPTS_DIR)) {
-        await fs.copy(SOURCE_SCRIPTS_DIR, path.join(DEST_DIR, '.agents', 'scripts'));
+        await fs.copy(SOURCE_SCRIPTS_DIR, path.join(DEST_DIR, 'agents-template', 'scripts'));
     }
 
     console.log("Copying Base Workflows...");
     if (await fs.pathExists(SOURCE_BASE_WORKFLOWS_DIR)) {
-        await fs.copy(SOURCE_BASE_WORKFLOWS_DIR, path.join(DEST_DIR, '.agents', 'workflows'));
+        await fs.copy(SOURCE_BASE_WORKFLOWS_DIR, path.join(DEST_DIR, 'agents-template', 'workflows'));
     }
 
     console.log("Injecting Custom Workflows (Setup Brain)...");
     if (await fs.pathExists(SOURCE_WORKFLOWS_DIR)) {
-        await fs.copy(SOURCE_WORKFLOWS_DIR, path.join(DEST_DIR, '.agents', 'workflows'), { overwrite: true });
+        await fs.copy(SOURCE_WORKFLOWS_DIR, path.join(DEST_DIR, 'agents-template', 'workflows'), { overwrite: true });
     }
 
     console.log("All templates copied successfully!");

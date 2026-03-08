@@ -42,22 +42,22 @@ async function runInstaller() {
         // 2. Copy Rule and Workflows
         spinner.text = `Copiando rule máster (GEMINI.md) e Workflows de IA...`;
         await fs.copy(
-            path.join(TEMPLATES_DIR, '.agents', 'rules'),
+            path.join(TEMPLATES_DIR, 'agents-template', 'rules'),
             path.join(DEST_AGENTS, 'rules') // A rule já com paths relativos
         );
         await fs.copy(
-            path.join(TEMPLATES_DIR, '.agents', 'workflows'),
+            path.join(TEMPLATES_DIR, 'agents-template', 'workflows'),
             path.join(DEST_AGENTS, 'workflows')
         );
 
         // 2.1 Copy Agents and Scripts
         spinner.text = `Copiando Personas de Agentes e Scripts (Validadores Python)...`;
         await fs.copy(
-            path.join(TEMPLATES_DIR, '.agents', 'agents'),
+            path.join(TEMPLATES_DIR, 'agents-template', 'agents'),
             path.join(DEST_AGENTS, 'agents')
         );
         await fs.copy(
-            path.join(TEMPLATES_DIR, '.agents', 'scripts'),
+            path.join(TEMPLATES_DIR, 'agents-template', 'scripts'),
             path.join(DEST_AGENTS, 'scripts')
         );
 
