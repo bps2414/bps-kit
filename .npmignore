@@ -1,0 +1,6 @@
+src/
+scripts/
+.agents/
+fix_paths.js
+test-install/
+test-install2/
