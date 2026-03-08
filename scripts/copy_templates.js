@@ -4,11 +4,11 @@ const path = require('path');
 const SOURCE_GEMINI_DIR = path.join(process.env.USERPROFILE, '.gemini');
 const SOURCE_SKILLS_DIR = path.join(SOURCE_GEMINI_DIR, 'antigravity', 'skills');
 const SOURCE_VAULT_DIR = path.join(SOURCE_GEMINI_DIR, 'antigravity', 'vault');
-const SOURCE_RULE_FILE = path.join('F:', 'VSCode', 'saas', 'bps-kit', '.agents', 'rules', 'GEMINI.md');
-const SOURCE_AGENTS_DIR = path.join('F:', 'VSCode', 'saas', 'antigravity-kit', '.agent', 'agents');
-const SOURCE_SCRIPTS_DIR = path.join('F:', 'VSCode', 'saas', 'antigravity-kit', '.agent', 'scripts');
-const SOURCE_BASE_WORKFLOWS_DIR = path.join('F:', 'VSCode', 'saas', 'antigravity-kit', '.agent', 'workflows');
-const SOURCE_RICH_SKILLS_DIR = path.join('F:', 'VSCode', 'saas', 'antigravity-kit', '.agent', 'skills');
+const SOURCE_RULE_FILE = path.join(__dirname, '..', '.agents', 'rules', 'GEMINI.md');
+const SOURCE_AGENTS_DIR = path.join(__dirname, '..', 'src', 'agents');
+const SOURCE_SCRIPTS_DIR = path.join(__dirname, '..', 'src', 'scripts');
+const SOURCE_BASE_WORKFLOWS_DIR = path.join(__dirname, '..', 'src', 'workflows');
+const SOURCE_RICH_SKILLS_DIR = path.join(SOURCE_GEMINI_DIR, 'antigravity', 'skills');
 
 const DEST_DIR = path.join(__dirname, '..', 'templates');
 const DEST_SKILLS_NORMAL = path.join(DEST_DIR, 'skills_normal');
