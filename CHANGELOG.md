@@ -5,6 +5,11 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.15] - 2026-03-08
+### Corrigido
+- Eliminado Overhead Brutal (+66 Referências Vias Copilot) mudando os Markdowns de Skills ativas para uma pasta raiz independente `.copilot-skills/` em vez de abrigá-las no escopo autônomo do `.github/`.
+- Adequado o formato do `copilot-instructions.md` trocando a propriedade estática de IA autônoma `trigger: always_on` pelo metadado padrão do GitHub Copilot `applyTo: "**/*"`.
+
 ## [1.0.14] - 2026-03-08
 ### Corrigido
 - O conversor de Copilot deixou de exportar **Skills** com a sintaxe `.instructions.md` munida de `applyTo: "**/*"`. Anteriormente, isso engatilhava o VS Code a injetar todos os 65 contextos do Antigravity na engine do Copilot de uma única vez, provocando erro letal na API GenAI (`128558 exceeds the limit of 128000`).

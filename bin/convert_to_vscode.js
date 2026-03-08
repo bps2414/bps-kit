@@ -20,11 +20,14 @@ async function convertToVsCode(destAgents, destBase) {
     if (await fs.pathExists(geminiPath)) {
         let content = await fs.readFile(geminiPath, 'utf8');
         // Adaptamos os caminhos na rule principal para o contexto do .github/ do VS Code
-        // Agora, skills são arquivos normais .md, preservando o auto-routing do Copilot e estourando tokens zero.
-        content = content.replace(/\.\/\.agents\/skills\//g, './.github/skills/');
+        // Agora, skills são arquivos normais .md fora da pasta .github/ para evitar a autoinjeção estática e o overhead de 66 referências.
+        content = content.replace(/\.\/\.agents\/skills\//g, './.copilot-skills/');
         content = content.replace(/\.\/\.agents\/vault\//g, './.copilot-vault/');
         content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
         content = content.replace(/\{skill-name\}\/SKILL\.md/g, '{skill-name}.md'); // Para buscar arquivos achatados invés de diretórios
+
+        // Trocar sintaxe bruta de trigger pelo ApplyTo nativo
+        content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**/*"');
 
         // As workflows no VS Code estao desabrigadas da pasta nativa, sugerimos le-las do vault ou inline
         content += `\n\n## 🔄 Workflows Base\nAs workflows antigas de Cursor (/brainstorm, etc) agora devem ser invocadas naturalmente no chat: "Rode o fluxo de brainstorm". Consulte o diretório .github/prompts/ para contexto.\n`;
@@ -33,9 +36,9 @@ async function convertToVsCode(destAgents, destBase) {
     }
 
     // 2. Converter as skills nativas (ativas) em arquivo comum .md achatado
-    // Importante: NÃO convertemos para .instructions.md pois o Copilot engoles todas no context limit estourando a IA! 
+    // Importante: NÃO alocamos em .github/skills pois o Copilot engole todos os Markdowns de lá e causa sobrecarga de +60 referências!
     const skillsDest = path.join(destAgents, 'skills');
-    const copilotSkillsDir = path.join(gitHubDir, 'skills');
+    const copilotSkillsDir = path.join(destBase, '.copilot-skills');
     await fs.ensureDir(copilotSkillsDir);
 
     if (await fs.pathExists(skillsDest)) {
