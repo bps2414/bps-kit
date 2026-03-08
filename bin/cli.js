@@ -95,7 +95,7 @@ async function runInstaller() {
         // 5. Conversor para VS Code se solicitado
         if (options.vscode) {
             spinner.text = `Transformando arquitetura para padrão GitHub Copilot (VS Code)...`;
-            const { convertToVsCode } = require('../src/scripts/convert_to_vscode');
+            const { convertToVsCode } = require('./convert_to_vscode');
             await convertToVsCode(DEST_AGENTS, DEST_BASE);
         }
 

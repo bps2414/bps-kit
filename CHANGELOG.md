@@ -5,6 +5,11 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.10] - 2026-03-08
+### Corrigido
+- Resolução do erro `MODULE_NOT_FOUND` reportado ao disparar a CLI contendo as flags combinadas de `--extra` / `--basic` e `--vscode`.
+- O utilitário conversor do GitHub Copilot havia ficado ilhado na pasta ignorada do NPM (`src/`) pois fazia parte da raiz template de desenvolvedor invés da build da CLI final. Foi realocado para a diretriz `bin/` operante.
+
 ## [1.0.9] - 2026-03-08
 ### Modificado
 - Refatoração visual completa do `README.md` com adição de emblemas (badges) e seções formatadas.
