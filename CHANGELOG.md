@@ -5,6 +5,26 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.2.0] - 2026-03-09
+### Adicionado
+- Novo template `ARCHITECTURE.md` distribuído junto ao kit, mapeando os 20 agentes com suas skills, skills organizadas por tier (basic/normal/extra), 12 workflows e scripts de validação disponíveis. Referenciado obrigatoriamente pelo `GEMINI.md` no startup da sessão.
+- Passo de cópia do `ARCHITECTURE.md` adicionado ao `cli.js` — agora instalado em `.agents/ARCHITECTURE.md` (Gemini/Cursor/Windsurf) e `.github/ARCHITECTURE.md` (VS Code Copilot) automaticamente.
+- Scripts de validação (`checklist.py`, `verify_all.py`) agora são movidos para `.github/scripts/` no modo `--vscode`, corrigindo bug crítico onde eram silenciosamente deletados junto com `.agents/`.
+
+### Corrigido
+- **GEMINI.md**: 12 problemas identificados e corrigidos no template global:
+  - Todos os 6 paths `.agent/` (singular) corrigidos para `.agents/` (plural) com subpastas adequadas.
+  - Protocolo Anti-Amnesia removido (instrução impossível para LLMs — causava loops).
+  - Skill count hardcoded `(~69)` substituído por referência dinâmica ao `ARCHITECTURE.md`.
+  - Skills e scripts fantasmas removidos do Routing Map e do Checklist Final (ex: `test_runner.py`, `ux_audit.py`).
+  - Socratic Gate expandido com 5ª estratégia "Direct Proceed" + validação de edge cases.
+  - TIER 2 corrigido para paths `.agents/agents/` ao invés de `.agents/` direto.
+  - Seção `Path Awareness` adicionada ao TIER 0 com mapa completo de diretórios.
+  - Seção `System Map Read` adicionada — leitura obrigatória do `ARCHITECTURE.md` no início da sessão.
+  - Final Checklist Protocol atualizado com comandos Python executáveis.
+  - `QUICK REFERENCE` expandido com listas de Scanners e Audits.
+- **convert_to_vscode.js**: Regexes atualizadas para cobrir paths `.agents/` com e sem prefixo `./`. Novos padrões adicionados para `.agents/agents/`, `.agents/scripts/` e `.agents/ARCHITECTURE.md`. Passos 7 e 8 adicionados para copiar `ARCHITECTURE.md` e mover `scripts/` para `.github/`.
+
 ## [1.0.18] - 2026-03-08
 ### Modificado
 - Universalização do *Lazy-Loading*: A instrução contida no template base `GEMINI.md` dizia que as habilidades (skills) na pasta raíz estariam "*always in context*" (sempre no contexto). Essa linha foi alterada para um comando forte que impõe as IAs nativas (Windsurf e Cursor) lerem a habilidade "explicitly read the SKILL.md file via file tools before using". Isso universaliza a redução de uso de Tokens Passivos (barrando possíveis alucinações de contexto) em todas as esferas e não apenas na arquitetura VS Code Copilot.
