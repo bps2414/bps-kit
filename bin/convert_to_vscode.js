@@ -12,6 +12,9 @@ async function convertToVsCode(destAgents, destBase) {
 
     console.log(chalk.dim('   [VS Code] Convertendo arquivos para sintaxe do Copilot...'));
 
+    // Garantir que o diretório .github existe antes de qualquer escrita
+    await fs.ensureDir(gitHubDir);
+
     // 1. Converter a rule master GEMINI.md em copilot-instructions.md
     const geminiPath = path.join(destAgents, 'rules', 'GEMINI.md');
     if (await fs.pathExists(geminiPath)) {
