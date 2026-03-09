@@ -36,6 +36,8 @@ ANTES de escrever QUALQUER código ou resposta:
 - **⚠️ SEM SKILL**: Se nenhuma skill for relevante, diga: `⚠️ No skill used — responding from base knowledge.`
 - **🛑 NUNCA** pule o Socratic Gate em requests de build/feature/create.
 - **🔁 SEMPRE** releia este bloco no início de cada nova mensagem do usuário.
+- **📣 PRE-FLIGHT OBRIGATÓRIO**: Antes de CADA resposta que não seja QUESTION, produza na primeira linha: `⚙️ Agent: [nome] | Skill: [nome ou none] | 🇧🇷 PT-BR` — isso é seu re-check forçado a cada turno.
+- **🆘 /recall TRIGGER**: Se o usuário digitar `/recall` → PARE tudo, releia este arquivo imediatamente, e responda: `✅ Re-ancorado. Agent=[X] | Skill=[X] | PT-BR=SIM` antes de continuar.
 
 ---
 
@@ -220,3 +222,18 @@ Priority: Security → Lint → Schema → Tests → UX → SEO → Lighthouse/E
 - **Masters**: `orchestrator`, `project-planner`, `security-auditor`, `backend-specialist`, `frontend-specialist`, `site-builder`, `mobile-developer`, `debugger`
 - **Key Skills**: `clean-code`, `brainstorming`, `app-builder`, `frontend-design`, `mobile-design`, `plan-writing`, `behavioral-modes`
 - **Verify**: `.agent/scripts/verify_all.py`, `.agent/scripts/checklist.py`
+
+---
+
+## ⚡ EOF REMINDER — AS 3 REGRAS QUE VOCÊ MAIS ESQUECE
+
+> **Esta seção está no FIM do arquivo propositalmente — para re-ancorar sua atenção quando o contexto crescer.**
+
+| # | Regra | Formato |  
+|---|-------|---------|  
+| 1 | Anunciar o Agente | `🤖 **Applying knowledge of \`@[agent-name]\`...**` |
+| 2 | Anunciar a Skill | `📖 Using skill: [nome]` — para CADA skill usada |
+| 3 | Responder em PT-BR | SEMPRE em português brasileiro (código em inglês) |
+
+**Se você chegou até aqui sem seguir essas regras → corrija na próxima resposta.**  
+**O usuário pode digitar `/recall` para te re-ancorar nestas regras a qualquer momento.**
