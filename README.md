@@ -6,42 +6,7 @@ Seu principal diferencial é o brilhante **Skill Vault System**: o sistema resol
 
 ---
 
-## 🏆 Onde o BPS Kit brilha de verdade: IDEs Antigravity
-
-> **TL;DR — O BPS Kit foi projetado e otimizado primariamente para o motor Antigravity: Cursor, Windsurf, Aide e similares. A experiência é significativamente superior nesses ambientes.**
-
-### Por que Antigravity > VS Code?
-
-| Capacidade | Cursor / Windsurf (Antigravity) | VS Code + Copilot |
-|---|---|---|
-| **Leitura de arquivos de regras** | Nativa — a IA lê `.agents/rules/GEMINI.md` automaticamente como system prompt | Manual — depende de configuração de glob no Copilot |
-| **Workflows como slash commands** | Sim — `/brainstorm`, `/debug`, `/deploy` nativos no chat | Parcialmente — embutidos no `copilot-instructions.md`, sem slash commands |
-| **Leitura de skills on-demand** | A IA usa `read_file` para abrir cada `SKILL.md` durante a conversa | Skills são injetadas como contexto estático — menos flexibilidade |
-| **Agents como personas** | Cada agente `.md` é lido e aplicado dinamicamente | Fundidos em um único `AGENTS.md` — menos granularidade |
-| **Anti-Amnesia / `/recall`** | Funciona com RLHF completo — a IA re-lê o manifesto ao comando | Limitado pelo modelo de contexto do Copilot |
-| **ARCHITECTURE.md** | Lido ativamente pela IA como mapa do sistema | Disponível, mas raramente consultado automaticamente |
-| **Vault de 1200+ skills** | Indexado e acessível dinamicamente via `VAULT_INDEX.md` | Armazenado em `.copilot-vault/` — depende de glob para ser lido |
-
-### IDEs Compatíveis (Modo Antigravity — Recomendado)
-
-| IDE | Status | Notas |
-|---|---|---|
-| **[Cursor](https://cursor.sh)** | ✅ Primeira classe | Melhor experiência. `.cursorrules` + `@agents` + tools nativas |
-| **[Windsurf](https://codeium.com/windsurf)** | ✅ Primeira classe | Excelente. `.windsurf/rules` + `@agents` funciona perfeitamente |
-| **[Aide](https://aide.dev)** | ✅ Compatível | Motor similar ao Cursor |
-| **VS Code + Copilot** | ⚠️ Modo adaptado | Use a flag `--vscode`. Funciona bem, mas com limitações estruturais |
-
-### Instale no seu projeto (Antigravity)
-
-```bash
-# Modo recomendado — perfil completo para desenvolvimento web/full-stack
-npx bps-kit@latest --normal
-
-# Para projetos de engenharia pesada (Python, Cloud, Security, QA)
-npx bps-kit@latest --extra
-```
-
-Após instalar, a pasta `.agents/` será criada com tudo que a IA precisa para operar no nível máximo.
+> 💡 **Melhor experiência no [Antigravity IDE](https://idx.google.com) (Google).** Suporte completo para VS Code + GitHub Copilot via flag `--vscode`.
 
 ---
 
