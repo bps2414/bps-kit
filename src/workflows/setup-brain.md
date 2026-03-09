@@ -31,9 +31,40 @@ Este workflow permite que eu (o seu agente Antigravity) faça uma varredura comp
    - Solicite aprovação do usuário para executar as movimentações locais.
 
 5. **Execução Automática da Otimização**:
-   - Assim que o usuário aprovar, utilize tools de shell (como `run_command` via bash ou node) ou scripts nativos para MOVER as pastas de skills sugeridas de `./.agents/vault/` para `./.agents/skills/`.
-   - Modifique regras do `.agents/rules/GEMINI.md` se for preciso rebalancear ou limpar referências.
+   - Assim que o usuário aprovar, utilize tools de shell para MOVER as pastas de skills:
+     - Desativar: mover de `./.agents/skills/{skill}` → `./.agents/vault/{skill}`
+     - Ativar: copiar de `./.agents/vault/{skill}` → `./.agents/skills/{skill}`
+   - Confirme o total final de skills ativas após os movimentos.
+
+6. **Atualização da Rule File (OBRIGATÓRIO após mover skills)**:
+   - Detecte qual formato está instalado no repositório:
+     - **VS Code / Copilot**: Rule File = `.github/copilot-instructions.md`
+     - **Antigravity padrão (Cursor/Windsurf)**: Rule File = `.agents/rules/GEMINI.md`
+   - Após mover as skills, edite a Rule File atualizando TODOS os trechos que referenciam nomes de skills:
+
+   **a) `Skill Auto-Routing System` → contagem de active skills:**
+   ```
+   - **Active skills** (~N): in `./.agents/skills/` (ou `./.copilot-skills/` no VS Code)
+   ```
+   Substituir N pelo número real de skills ativas após a otimização.
+
+   **b) `Intent → Skill Routing Map`:**
+   - Remover todas as linhas de intent que apontam para skills que foram movidas para o vault.
+   - Adicionar/ajustar entradas baseadas nas novas skills ativas e na stack detectada.
+   - Exemplo: se `tailwind-patterns` foi para o vault, remover da linha `UI/component`.
+
+   **c) `Project Type Routing` (TIER 1):**
+   - Atualizar a tabela de agentes/skills para refletir o tipo real de projeto detectado.
+   - Adicionar nota `> 🔴 Este projeto é [tipo detectado]. Não usar agentes de [tipos irrelevantes].`
+
+   **d) `Final Checklist` (TIER 1):**
+   - Remover linhas de scripts que dependem de skills agora no vault (ex: `ux_audit.py → frontend-design`).
+   - Manter apenas scripts cujas skills dependentes ainda estejam ativas.
+
+   **e) `QUICK REFERENCE`:**
+   - Atualizar `Masters` e `Key Skills` para refletir os agentes/skills relevantes ao projeto.
 
 ### Critérios de Sucesso
 - **Precisão**: Apenas skills de altíssimo valor agregado (diretamente conectadas com a stack) serão movidas. Não encha o contexto em vão. Você foi programado para manter seu Token footprint baixo.
+- A Rule File deve estar 100% sincronizada com as skills ativas — zero referências a skills no vault.
 - Encerre rodando uma mensagem informando o resultado "Cérebro Calibrado e Otimizado para este ecossistema."

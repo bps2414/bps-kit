@@ -5,45 +5,165 @@ const path = require('path');
 const chalk = require('chalk');
 const ora = require('ora');
 const { program } = require('commander');
+const { execSync } = require('child_process');
 
-program
-    .version('1.0.0')
-    .description('BPS Kit Installer - The NextGen Modular AI Brain Setup')
-    .option('-b, --basic', 'Modo economia extrema (11 skills apenas o core analítico, ideal para Copilot)')
-    .option('-n, --normal', 'Instala as skills essenciais (39 skills, ideal para Web/React/Next)')
-    .option('-e, --extra', 'Instala as skills avançadas Premium (65 skills, inclui Python, QA, Cloud e Sec)')
-    .option('--vscode', 'Converte a estrutura final herdada do Cursor/Windsurf (.agents) para o formato do VS Code GitHub Copilot (.github)')
-    .parse(process.argv);
-
-const options = program.opts();
+const pkg = require('../package.json');
 
 // Configuration
 const TEMPLATES_DIR = path.join(__dirname, '..', 'templates');
 const DEST_BASE = process.cwd();
 const DEST_AGENTS = path.join(DEST_BASE, '.agents');
-const DEST_GEMINI = path.join(DEST_BASE, '.gemini'); // Symlink fake fallback or rules
+const LOCKFILE = path.join(DEST_BASE, '.bps-kit.json');
 
-async function runInstaller() {
+// ──────────────────────────────────────────────────────────────────────────────
+// Custom Help
+// ──────────────────────────────────────────────────────────────────────────────
+function printHelp() {
+    console.log(`
+${chalk.bold.cyan('🚀 BPS Kit')} ${chalk.dim(`v${pkg.version}`)} ${chalk.bold('— Antigravity IDE Brain Installer')}
+
+${chalk.bold('USAGE:')}
+  ${chalk.green('npx bps-kit')} ${chalk.dim('[profile] [options]')}
+
+${chalk.bold('PROFILES:')}
+  ${chalk.green('--basic')}     Modo economia extrema (11 skills) — ideal para Copilot simples
+  ${chalk.green('--normal')}    Skills essenciais     (42 skills) — ideal para Web/React/Next  ${chalk.dim('[default]')}
+  ${chalk.green('--extra')}     Skills Premium        (69 skills) — Python, QA, Cloud, Security
+
+${chalk.bold('OPTIONS:')}
+  ${chalk.green('--vscode')}    Converte para o formato VS Code GitHub Copilot ${chalk.dim('(.github/)')}
+  ${chalk.green('--update')}    Re-instala o cérebro usando o perfil salvo neste projeto
+  ${chalk.green('--upgrade')}   Atualiza o pacote bps-kit para a versão mais recente no npm
+  ${chalk.green('--help')}      Exibe esta mensagem de ajuda
+  ${chalk.green('--version')}   Exibe a versão atual
+
+${chalk.bold('EXAMPLES:')}
+  ${chalk.dim('npx bps-kit --normal')}
+  ${chalk.dim('npx bps-kit --extra --vscode')}
+  ${chalk.dim('npx bps-kit --update')}
+  ${chalk.dim('npx bps-kit --upgrade')}
+
+${chalk.bold('TARGETS:')}
+  ${chalk.cyan('Antigravity IDE')} ${chalk.dim('(primary)')}  →  ${chalk.dim('.agents/')}
+  ${chalk.cyan('VS Code Copilot')} ${chalk.dim('(--vscode)')} →  ${chalk.dim('.github/')} + ${chalk.dim('.copilot-skills/')}
+`);
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Upgrade — atualiza o próprio pacote npm
+// ──────────────────────────────────────────────────────────────────────────────
+async function runUpgrade() {
+    console.log(chalk.bold.cyan('\n🔄 BPS Kit — Upgrade\n'));
+    const spinner = ora('Verificando versão mais recente no npm...').start();
+
+    try {
+        const latest = execSync('npm show bps-kit version', { encoding: 'utf8' }).trim();
+
+        if (latest === pkg.version) {
+            spinner.succeed(chalk.green(`Você já está na versão mais recente: v${pkg.version}`));
+            return;
+        }
+
+        spinner.text = `Atualizando bps-kit ${chalk.yellow(`v${pkg.version}`)} → ${chalk.green(`v${latest}`)}...`;
+        execSync('npm install -g bps-kit@latest', { stdio: 'inherit' });
+        spinner.succeed(chalk.green(`bps-kit atualizado para v${latest} com sucesso! 🎉`));
+        console.log(chalk.dim('\nPróxima execução: npx bps-kit --update  (para re-instalar o cérebro com o novo pacote)\n'));
+
+    } catch (err) {
+        spinner.fail(chalk.red('Falha ao verificar ou instalar atualização.'));
+        console.error(chalk.dim(err.message));
+        process.exit(1);
+    }
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Update — re-instala usando o perfil salvo em .bps-kit.json
+// ──────────────────────────────────────────────────────────────────────────────
+async function runUpdate() {
+    console.log(chalk.bold.cyan('\n♻️  BPS Kit — Update\n'));
+
+    if (!await fs.pathExists(LOCKFILE)) {
+        console.log(chalk.red('✖ Lockfile .bps-kit.json não encontrado neste diretório.'));
+        console.log(chalk.yellow('  Execute a instalação inicial primeiro:'));
+        console.log(chalk.dim('  npx bps-kit --normal        (ou --basic / --extra)\n'));
+        process.exit(1);
+    }
+
+    const lock = await fs.readJson(LOCKFILE);
+    const mode = lock.mode || 'normal';
+    const wasVscode = lock.vscode || false;
+
+    console.log(chalk.white(`Perfil detectado : `) + chalk.greenBright(mode.toUpperCase()));
+    console.log(chalk.white(`VS Code mode     : `) + chalk.greenBright(wasVscode ? 'sim' : 'não'));
+    console.log('');
+
+    // Reutilizar a lógica de instalação
+    await runInstaller({ basic: mode === 'basic', normal: mode === 'normal', extra: mode === 'extra', vscode: wasVscode });
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Commander setup
+// ──────────────────────────────────────────────────────────────────────────────
+
+// Interceptar --help e ausência de flags ANTES do commander processar
+const rawArgs = process.argv.slice(2);
+if (rawArgs.length === 0 || rawArgs.includes('--help') || rawArgs.includes('-h')) {
+    printHelp();
+    process.exit(0);
+}
+
+program
+    .name('bps-kit')
+    .version(pkg.version, '-v, --version', 'Exibe a versão atual')
+    .description('BPS Kit — Antigravity IDE Brain Installer')
+    .option('-b, --basic', 'Modo economia extrema (11 skills apenas o core analítico, ideal para Copilot)')
+    .option('-n, --normal', 'Instala as skills essenciais (42 skills, ideal para Web/React/Next)')
+    .option('-e, --extra', 'Instala as skills avançadas Premium (69 skills, inclui Python, QA, Cloud e Sec)')
+    .option('--vscode', 'Converte a estrutura para o formato VS Code GitHub Copilot (.github/)')
+    .option('--update', 'Re-instala o cérebro usando o perfil salvo (.bps-kit.json)')
+    .option('--upgrade', 'Atualiza o pacote bps-kit para a versão mais recente no npm')
+    .helpOption(false)
+    .parse(process.argv);
+
+const options = program.opts();
+
+// Roteamento
+if (options.upgrade) {
+    runUpgrade();
+} else if (options.update) {
+    runUpdate();
+} else {
+    (async () => {
+        // Determinar o mode (default normal se nao passar args)
+        let mode = 'normal';
+        if (options.basic) {
+            mode = 'basic';
+        } else if (options.extra) {
+            mode = 'extra';
+        }
+        await runInstaller({ ...options, _mode: mode });
+    })();
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Installer principal
+// ──────────────────────────────────────────────────────────────────────────────
+async function runInstaller(opts = {}) {
     console.log(chalk.bold.cyan('\n🚀 BPS Kit Setup Inicializado'));
     console.log(chalk.dim('Instalando Cérebro de IA customizado para seu repositório...\n'));
 
-    // Determinar o mode (default normal se nao passar args)
-    let mode = 'normal';
-    if (options.basic) {
-        mode = 'basic';
-    } else if (options.extra) {
-        mode = 'extra';
-    } else if (!options.normal && !options.extra && !options.basic) {
-        console.log(chalk.yellow('⚠️  Nenhum perfil explicitado (--basic, --normal ou --extra). Utilizando default: --normal\n'));
-    }
+    let mode = opts._mode || 'normal';
+    if (opts.basic) mode = 'basic';
+    else if (opts.extra) mode = 'extra';
+    else if (opts.normal) mode = 'normal';
 
     const spinner = ora('Montando diretórios base...').start();
 
     try {
-        if (options.vscode && await fs.pathExists(path.join(DEST_BASE, '.github'))) {
+        if (opts.vscode && await fs.pathExists(path.join(DEST_BASE, '.github'))) {
             spinner.warn(chalk.yellow('Aviso: Pasta .github detectada. Os artefatos do Copilot serão sobrescritos se existirem.'));
             spinner.start('Montando diretórios base...');
-        } else if (!options.vscode && await fs.pathExists(DEST_AGENTS)) {
+        } else if (!opts.vscode && await fs.pathExists(DEST_AGENTS)) {
             spinner.warn(chalk.yellow('Aviso: Pasta .agents já existe. O BPS Kit a sobrescreverá.'));
             spinner.start('Montando diretórios base...');
         }
@@ -101,32 +221,42 @@ async function runInstaller() {
         }
 
         // 5. Conversor para VS Code se solicitado
-        if (options.vscode) {
+        if (opts.vscode) {
             spinner.text = `Transformando arquitetura para padrão GitHub Copilot (VS Code)...`;
             const { convertToVsCode } = require('./convert_to_vscode');
             await convertToVsCode(DEST_AGENTS, DEST_BASE);
         }
 
+        // 6. Salvar lockfile com perfil utilizado
+        await fs.writeJson(LOCKFILE, {
+            mode,
+            vscode: opts.vscode || false,
+            version: pkg.version,
+            installedAt: new Date().toISOString(),
+        }, { spaces: 2 });
+
         spinner.succeed(chalk.green('Cérebro de IA instanciado com sucesso!'));
 
-        let finalCount = '39';
+        let finalCount = '42';
         if (mode === 'basic') finalCount = '11';
-        if (mode === 'extra') finalCount = '65';
+        if (mode === 'extra') finalCount = '69';
 
         console.log(chalk.cyan('\n============== [ RESUMO DA INSTALAÇÃO ] =============='));
         console.log(chalk.white(`Perfil Carregado : `) + chalk.greenBright(mode.toUpperCase()));
         console.log(chalk.white(`Skills Ativas    : `) + chalk.greenBright(finalCount));
         console.log(chalk.white(`Skills no Vault  : `) + chalk.greenBright('1197'));
+        console.log(chalk.white(`Lockfile         : `) + chalk.dim('.bps-kit.json'));
         console.log(chalk.cyan('======================================================'));
 
         console.log(chalk.yellow('\n💡 Next Steps:'));
-        if (options.vscode) {
+        if (opts.vscode) {
             console.log(chalk.white('1. O GitHub Copilot Agent já deve estar lendo o `.github/copilot-instructions.md`.'));
         } else {
             console.log(chalk.white('1. O sistema Antigravity já deve estar lendo o `.agents/rules/GEMINI.md`.'));
         }
         console.log(chalk.white('2. Para auto-calibrar a sua IA baseada nos arquivos deste repositório, basta pedir para ele:\n'));
         console.log(chalk.dim('   "Rode a workflow setup-brain para otimizar minhas skills neste projeto"'));
+        console.log(chalk.dim('\n   npx bps-kit --update    (para re-instalar o cérebro após um upgrade)'));
         console.log('\n🌟 Boa codificação estruturada!\n');
 
     } catch (error) {
@@ -135,5 +265,3 @@ async function runInstaller() {
         process.exit(1);
     }
 }
-
-runInstaller();

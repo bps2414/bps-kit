@@ -67,7 +67,7 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
 ## 🧠 Skill Auto-Routing System (v8.0.0 — Vault Edition)
 
 ### Architecture
-- **Active skills** (~65): in `./.agents/skills/` — explicitly read the SKILL.md file via file tools before using
+- **Active skills** (~69): in `./.agents/skills/` — explicitly read the SKILL.md file via file tools before using
 - **Vault skills** (~1200+): in `./.agents/vault/` — discoverable via index
 
 ### Core Rule — Skills First
@@ -84,6 +84,8 @@ After invoking any skill, explicitly say: '📖 Using skill: [skill-name]' befor
 | Intent | Skills to Use |
 |--------|---------------|
 | **New site/app** | brainstorming → plan-writing → frontend-design. SaaS: + senior-fullstack + micro-saas-launcher |
+| **Landing page / site** | site-builder + scroll-experience + enhance-prompt. Workflow: build-site |
+| **Stitch design** | design-md + enhance-prompt + react-components. Loop: stitch-loop (Extra) |
 | **UI/component** | frontend-design + react-patterns + tailwind-patterns. Animated: + scroll-experience |
 | **Auth/login** | Ask user: Clerk → clerk-auth / Supabase → nextjs-supabase-auth |
 | **Database/ORM** | database-design + prisma-expert |
@@ -168,6 +170,7 @@ Before coding, answer: (1) Goal of agent/skill? (2) Principles to apply? (3) How
 |---|---|---|
 | **MOBILE** | `mobile-developer` | mobile-design |
 | **WEB** | `frontend-specialist` | frontend-design |
+| **LANDING PAGE** | `site-builder` | scroll-experience, enhance-prompt, design-md |
 | **BACKEND** | `backend-specialist` | api-patterns, database-design |
 
 > 🔴 Mobile + frontend-specialist = WRONG. Mobile = mobile-developer ONLY.
@@ -214,6 +217,6 @@ Priority: Security → Lint → Schema → Tests → UX → SEO → Lighthouse/E
 
 ## 📁 QUICK REFERENCE
 
-- **Masters**: `orchestrator`, `project-planner`, `security-auditor`, `backend-specialist`, `frontend-specialist`, `mobile-developer`, `debugger`
+- **Masters**: `orchestrator`, `project-planner`, `security-auditor`, `backend-specialist`, `frontend-specialist`, `site-builder`, `mobile-developer`, `debugger`
 - **Key Skills**: `clean-code`, `brainstorming`, `app-builder`, `frontend-design`, `mobile-design`, `plan-writing`, `behavioral-modes`
 - **Verify**: `.agent/scripts/verify_all.py`, `.agent/scripts/checklist.py`
