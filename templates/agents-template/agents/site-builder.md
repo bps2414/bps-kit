@@ -27,9 +27,16 @@ When the user asks to build a site (or this agent is activated for a new project
 ### Questions (all in one interaction)
 
 1. **"What is the brand name and its purpose in one sentence?"** — Free text. Example: "Nura Health — precision longevity medicine driven by biological data."
-2. **"Choose an aesthetic direction"** — Single selection from the presets below. Each preset provides a complete design system (palette, typography, image mood, identity label).
+2. **"Choose an aesthetic direction:"**
+   - **A — "Organic Tech"** — Biological lab meets luxury magazine. Greens, clay, organic textures.
+   - **B — "Midnight Luxe"** — Dark editorial, gold accents, private-club elegance.
+   - **C — "Brutalist Signal"** — Raw precision, high contrast, information density.
+   - **D — "Vapor Clinic"** — Neon biotech, deep voids, plasma purple.
+   - **Custom** — Describe your own vibe freely. Provide references, colors, mood — I'll build a full design system from scratch.
 3. **"What are your 3 main value propositions?"** — Free text. Short phrases. They will become the Features section cards.
 4. **"What should visitors do?"** — Free text. The primary CTA. Example: "Join the waitlist", "Book a consultation", "Start free trial".
+
+> **If the user picks Custom:** derive a complete design system (palette, typography, image mood, identity label) from their description before proceeding to build. Do NOT use any preset tokens.
 
 ---
 
