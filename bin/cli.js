@@ -171,11 +171,15 @@ async function runInstaller(opts = {}) {
         // 1. Setup Base Directories
         await fs.ensureDir(DEST_AGENTS);
 
-        // 2. Copy Rule and Workflows
-        spinner.text = `Copiando rule máster (GEMINI.md) e Workflows de IA...`;
+        // 2. Copy Rule, ARCHITECTURE.md, and Workflows
+        spinner.text = `Copiando rule máster (GEMINI.md), ARCHITECTURE.md e Workflows de IA...`;
         await fs.copy(
             path.join(TEMPLATES_DIR, 'agents-template', 'rules'),
             path.join(DEST_AGENTS, 'rules') // A rule já com paths relativos
+        );
+        await fs.copy(
+            path.join(TEMPLATES_DIR, 'agents-template', 'ARCHITECTURE.md'),
+            path.join(DEST_AGENTS, 'ARCHITECTURE.md')
         );
         await fs.copy(
             path.join(TEMPLATES_DIR, 'agents-template', 'workflows'),

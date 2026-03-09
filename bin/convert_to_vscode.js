@@ -21,10 +21,15 @@ async function convertToVsCode(destAgents, destBase) {
         let content = await fs.readFile(geminiPath, 'utf8');
         // Adaptamos os caminhos na rule principal para o contexto do .github/ do VS Code
         // Agora, skills são arquivos normais .md fora da pasta .github/ para evitar a autoinjeção estática e o overhead de 66 referências.
-        content = content.replace(/\.\/\.agents\/skills\//g, './.copilot-skills/');
-        content = content.replace(/\.\/\.agents\/vault\//g, './.copilot-vault/');
-        content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
-        content = content.replace(/\.\/\.agents\/VAULT_INDEX\.md/g, './.github/VAULT_INDEX.md');
+
+        // Specific path patterns FIRST (before general .agents/ catch-all)
+        content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
+        content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
+        content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
+        content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
+        content = content.replace(/\.?\/?\.agents\/ARCHITECTURE\.md/g, '.github/ARCHITECTURE.md');
+        content = content.replace(/\.?\/?\.agents\/agents\//g, '.github/agents/');
+        content = content.replace(/\.?\/?\.agents\/scripts\//g, '.github/scripts/');
 
         // Trocar sintaxe bruta de trigger pelo ApplyTo nativo
         content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**/*"');
@@ -48,7 +53,7 @@ async function convertToVsCode(destAgents, destBase) {
     const vaultIndexSrc = path.join(destAgents, 'VAULT_INDEX.md');
     if (await fs.pathExists(vaultIndexSrc)) {
         let content = await fs.readFile(vaultIndexSrc, 'utf8');
-        content = content.replace(/\.\/\.agents\/vault\//g, './.copilot-vault/');
+        content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
         await fs.writeFile(path.join(gitHubDir, 'VAULT_INDEX.md'), content);
     }
 
@@ -96,11 +101,13 @@ ${content}`;
 
                 // Converter referências visuais e lógicas residuais do Antigravity nativo 
                 // para o equivalente funcional da arquitetura VS Code de forma escalonada!
-                content = content.replace(/\.\/\.agents\/rules\/GEMINI\.md/g, './.github/copilot-instructions.md');
-                content = content.replace(/\.\/\.agents\/skills\//g, './.copilot-skills/');
-                content = content.replace(/\.\/\.agents\/vault\//g, './.copilot-vault/');
-                content = content.replace(/\.\/\.agents\/VAULT_INDEX\.md/g, './.github/VAULT_INDEX.md');
-                content = content.replace(/\.\/\.agents\//g, './.github/');
+                content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
+                content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
+                content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
+                content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
+                content = content.replace(/\.?\/?\.agents\/agents\//g, '.github/agents/');
+                content = content.replace(/\.?\/?\.agents\/scripts\//g, '.github/scripts/');
+                content = content.replace(/\.?\/?\.agents\//g, '.github/');
                 content = content.replace(/GEMINI\.md/g, 'copilot-instructions.md');
 
                 // Formato exigido para GitHub Copilot Prompts (.prompt.md)
@@ -113,6 +120,25 @@ ${content}`;
                 await fs.writeFile(path.join(copilotPromptsDir, `${promptName}.prompt.md`), vsCodePromptContent);
             }
         }
+    }
+
+    // 7. Copiar ARCHITECTURE.md para .github/
+    const archSrc = path.join(destAgents, 'ARCHITECTURE.md');
+    if (await fs.pathExists(archSrc)) {
+        let archContent = await fs.readFile(archSrc, 'utf8');
+        archContent = archContent.replace(/\.agents\/skills\//g, '.copilot-skills/');
+        archContent = archContent.replace(/\.agents\/vault\//g, '.copilot-vault/');
+        archContent = archContent.replace(/\.agents\/agents\//g, '.github/agents/');
+        archContent = archContent.replace(/\.agents\/scripts\//g, '.github/scripts/');
+        archContent = archContent.replace(/\.agents\//g, '.github/');
+        await fs.writeFile(path.join(gitHubDir, 'ARCHITECTURE.md'), archContent);
+    }
+
+    // 8. Mover scripts de validação (checklist.py, verify_all.py) para .github/scripts/
+    const scriptsSrc = path.join(destAgents, 'scripts');
+    const scriptsDestDir = path.join(gitHubDir, 'scripts');
+    if (await fs.pathExists(scriptsSrc)) {
+        await fs.move(scriptsSrc, scriptsDestDir, { overwrite: true });
     }
 
     // Limpeza pesada! Como o ambiente ja foi migrado de .agents para .github e .copilot-vault, delete a origem da instalacao hibrida.
