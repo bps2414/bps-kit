@@ -8,6 +8,7 @@ const SOURCE_RULE_FILE = path.join(__dirname, '..', '.agents', 'rules', 'GEMINI.
 const SOURCE_AGENTS_DIR = path.join(__dirname, '..', 'src', 'agents');
 const SOURCE_SCRIPTS_DIR = path.join(__dirname, '..', 'src', 'scripts');
 const SOURCE_BASE_WORKFLOWS_DIR = path.join(__dirname, '..', 'src', 'workflows');
+const SOURCE_ARCHITECTURE_FILE = path.join(__dirname, '..', 'src', 'ARCHITECTURE.md');
 const SOURCE_RICH_SKILLS_DIR = path.join(SOURCE_GEMINI_DIR, 'antigravity', 'skills');
 
 const DEST_DIR = path.join(__dirname, '..', 'templates');
@@ -129,6 +130,13 @@ async function copyTemplates() {
     console.log("Injecting Custom Workflows (Setup Brain)...");
     if (await fs.pathExists(SOURCE_WORKFLOWS_DIR)) {
         await fs.copy(SOURCE_WORKFLOWS_DIR, path.join(DEST_DIR, 'agents-template', 'workflows'), { overwrite: true });
+    }
+
+    console.log("Copying ARCHITECTURE.md...");
+    if (await fs.pathExists(SOURCE_ARCHITECTURE_FILE)) {
+        await fs.copy(SOURCE_ARCHITECTURE_FILE, path.join(DEST_DIR, 'agents-template', 'ARCHITECTURE.md'));
+    } else {
+        console.warn('[WARN] src/ARCHITECTURE.md not found — skipping.');
     }
 
     console.log("All templates copied successfully!");
