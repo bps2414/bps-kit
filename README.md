@@ -21,6 +21,12 @@ npx bps-kit@latest --basic
 # 💻 Integrar nativamente para VS Code (GitHub Copilot)
 # Adicione a flag --vscode combinada a qualquer um dos perfis acima:
 npx bps-kit@latest --basic --vscode
+
+# 🔄 Re-instalar usando o perfil já salvo no projeto (sem precisar lembrar a flag)
+npx bps-kit@latest --update
+
+# ⬆️ Atualizar o próprio pacote bps-kit para a versão mais recente do NPM
+npx bps-kit@latest --upgrade
 ```
 
 ### 🧠 O que acontece após a instalação? (Motor Antigravity Padrão)
@@ -54,7 +60,21 @@ Isso forçará a engine a jogar o lixo fora e focar nos blocos iniciais cruciais
 
 ---
 
-## 🏗️ Slash Commands Nativos (Modo Standard)
+## � Stitch Skills — Design Cinematográfico & UI Premium
+
+O **BPS Kit** integra o ecossistema **[Stitch Skills](https://github.com/google-labs-code/stitch-skills)** do Google Labs, trazendo um conjunto de skills especializadas em design de alta fidelidade e componentes visuais de nível cinematográfico:
+
+| Skill | Perfil | Descrição |
+|---|---|---|
+| `design-md` | `--normal` | Design system via Markdown estruturado |
+| `enhance-prompt` | `--normal` | Elevação e refinamento de prompts criativos |
+| `react-components` | `--normal` | Componentes React com padrões premium de UI |
+| `remotion` | Vault | Animações e vídeos programáticos com Remotion |
+| `stitch-loop` | `--extra` | Loop criativo de design iterativo |
+
+---
+
+## �🏗️ Slash Commands Nativos (Modo Standard)
 
 Se não estiver usando a flag `--vscode` (onde workflows são embutidas), você terá acesso à estrutura local com robustez. Digite no chat da sua IA:
 
@@ -70,12 +90,15 @@ Se não estiver usando a flag `--vscode` (onde workflows são embutidas), você 
 O **BPS Kit** deve sua fundação brilhante e seu mar enciclopédico de regras a bibliotecas open-source excepcionais de onde os templates originais foram bifurcados/incorporados. Deixamos nossos enormes agradecimentos às fontes originais:
 
 1. **[antigravity-awesome-skills (by sickn33)](https://github.com/sickn33/antigravity-awesome-skills)**  
-   A mãe de virtualmente todas as nossas mais de 1.100+ skills abrigadas no Vault. Essa bibilioteca lendária confere a capacidade enciclopédica esmagadora de cobrir quase que a íntegra dos casos de uso para software development do planeta (Mobile, Machine Learning, Copywriting, FinOps, Design, Data Engineering e DevOps).
+   A mãe de virtualmente todas as nossas mais de 1.100+ skills abrigadas no Vault. Essa biblioteca lendária confere a capacidade enciclopédica esmagadora de cobrir quase que a íntegra dos casos de uso para software development do planeta (Mobile, Machine Learning, Copywriting, FinOps, Design, Data Engineering e DevOps).
 
 2. **[antigravity-kit (by vudovn)](https://github.com/vudovn/antigravity-kit)**  
    A forja estrutural primária. Responsável pela árvore original de Personas de Agentes, Workflows, Slash Commands, e os potentes 18 scripts de validação Python Hardcore na camada de código em si.
 
-A engenharia inteira do **BPS Kit** serve massivamente para unificar essas duas titânicas inteligências em um fluxo só — através da magia do Auto-Routing isolacionista por Glob e do Vaulting Comprimido — ultrapassando enfim as limitações brutais da context-window. Sem a colaboração fundadora de vudovn e sickn33, essa maravilha não existiria.
+3. **[stitch-skills (by google-labs-code)](https://github.com/google-labs-code/stitch-skills)**  
+   O cérebro visual e criativo do BPS Kit. Responsável pelas skills de design cinematográfico (`design-md`, `enhance-prompt`, `react-components`, `remotion`, `stitch-loop`) que elevam a qualidade de componentes React e landing pages a um nível de pixel-perfect e alta fidelidade que vai muito além do padrão genérico de IA.
+
+A engenharia inteira do **BPS Kit** serve massivamente para unificar essas três titânicas inteligências em um fluxo só — através da magia do Auto-Routing isolacionista por Glob e do Vaulting Comprimido — ultrapassando enfim as limitações brutais da context-window. Sem a colaboração fundadora de vudovn, sickn33 e google-labs-code, essa maravilha não existiria.
 
 ---
 ## 📄 Licença
