@@ -3,3 +3,6 @@ node_modules/
 *.log
 test-install/
 test-install2/
+.copilot-vault/
+.copilot-skills/
+.github/
