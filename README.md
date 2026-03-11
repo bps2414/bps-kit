@@ -43,7 +43,8 @@ npx bps-kit@latest --upgrade
 Se você adicionou a flag `--vscode`, a arquitetura compilada será organicamente moldada para as regras da nuvem do GitHub (`.github/`):
 - O manifesto base e as Workflows irão habitar o `.github/copilot-instructions.md`.
 - As Skills ativas receberão glob patterns específicos (`applyTo: "**/*"`) protegendo seu ciclo de vida.
-- As famosas 20 Personas se fundirão em um único registro local `.github/AGENTS.md`.
+- As 22 Personas são mapeadas individualmente em `.github/agents/*.agent.md` — com frontmatter Copilot nativo.
+- O manifesto de routing de agentes (Keyword→Agent) é exportado para `.github/AGENTS.md`.
 - A gigantesca Vault contendo +1000 skills inativas será armazenada inteligentemente em isolamento (`.copilot-vault/`), salvando permanentemente seu limite de Chat no VS Code de travar.
 
 ### 🪄 Autocalibragem de Base de Código (Workflow Analyzer)

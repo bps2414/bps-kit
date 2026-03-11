@@ -26,6 +26,7 @@ async function convertToVsCode(destAgents, destBase) {
         content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
         content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
         content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
+        content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/AGENTS.md');
         content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
         content = content.replace(/\.?\/?\.agents\/ARCHITECTURE\.md/g, '.github/ARCHITECTURE.md');
         content = content.replace(/\.?\/?\.agents\/agents\//g, '.github/agents/');
@@ -38,6 +39,22 @@ async function convertToVsCode(destAgents, destBase) {
         content += `\n\n## 🔄 Workflows Base\nAs workflows antigas de Cursor (/brainstorm, etc) agora devem ser invocadas naturalmente no chat: "Rode o fluxo de brainstorm". Consulte o diretório .github/prompts/ para contexto.\n`;
 
         await fs.writeFile(path.join(gitHubDir, 'copilot-instructions.md'), content);
+    }
+
+    // 1.1 Converter AGENTS.md (routing rules) com os mesmos path replacements
+    const agentsMdPath = path.join(destAgents, 'rules', 'AGENTS.md');
+    if (await fs.pathExists(agentsMdPath)) {
+        let content = await fs.readFile(agentsMdPath, 'utf8');
+        content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
+        content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
+        content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
+        content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/AGENTS.md');
+        content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
+        content = content.replace(/\.?\/?\.agents\/ARCHITECTURE\.md/g, '.github/ARCHITECTURE.md');
+        content = content.replace(/\.?\/?\.agents\/agents\//g, '.github/agents/');
+        content = content.replace(/\.?\/?\.agents\/scripts\//g, '.github/scripts/');
+        content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**/*"');
+        await fs.writeFile(path.join(gitHubDir, 'AGENTS.md'), content);
     }
 
     // 2. Mover as skills ativas inteiras (em vez de achatar) para preservar scripts em python embutidos e sub documentações!

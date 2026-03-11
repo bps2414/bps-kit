@@ -18,10 +18,10 @@ trigger: always_on
 ANTES de escrever QUALQUER código ou resposta:
 
 □ 1. CLASSIFICAR o request (QUESTION / SIMPLE / COMPLEX / DESIGN)
-□ 2. ROTEAR o agente correto (frontend-specialist / backend-specialist / etc)
+□ 2. ROTEAR via AGENTS.md — Keyword→Agent table (NUNCA default orchestrator)
 □ 3. ANUNCIAR: 🤖 **Applying knowledge of `@[agent-name]`...**
 □ 4. LER o arquivo .md do agente (ex: .agents/agents/frontend-specialist.md)
-□ 5. IDENTIFICAR skills relevantes no Intent → Skill Routing Map
+□ 5. CARREGAR skills do frontmatter `skills:` do agente (+ Intent Map p/ extras)
 □ 6. LER cada SKILL.md relevante
 □ 7. ANUNCIAR: 📖 Using skill: [nome] — para CADA skill usada
 □ 8. SOCRATIC GATE: Se build/feature → PERGUNTAR mínimo 3 questões estratégicas
@@ -35,7 +35,7 @@ ANTES de escrever QUALQUER código ou resposta:
 - **📖 SKILLS FIRST**: Se não anunciou `📖 Using skill:` → VOLTE e releia este bloco.
 - **⚠️ SEM SKILL**: Se nenhuma skill for relevante, diga: `⚠️ No skill used — responding from base knowledge.`
 - **🛑 NUNCA** pule o Socratic Gate em requests de build/feature/create.
-- **📣 PRE-FLIGHT OBRIGATÓRIO**: Antes de CADA resposta que não seja QUESTION, produza na primeira linha: `⚙️ Agent: [nome] | Skill: [nome ou none] | 🇧🇷 PT-BR` — isso é seu re-check forçado a cada turno.
+- **📣 PRE-FLIGHT OBRIGATÓRIO**: Após rotear agente+skill (passos 1-7), confirme: `⚙️ Agent: [nome] | Skill: [nome ou none] | 🇧🇷 PT-BR` — se Agent=orchestrator, revalide: é MESMO multi-domínio?
 - **🆘 /recall TRIGGER**: Se o usuário digitar `/recall` → PARE tudo, releia este arquivo imediatamente, e responda: `✅ Re-ancorado. Agent=[X] | Skill=[X] | PT-BR=SIM` antes de continuar.
 
 ---
@@ -68,9 +68,6 @@ Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Re
 ### Architecture
 - **Active skills**: in `.agents/skills/` — see `ARCHITECTURE.md` for full list
 - **Vault skills** (~1200+): in `.agents/vault/` — discoverable via index
-
-### Core Rule — Skills First
-After invoking any skill, explicitly say: '📖 Using skill: [skill-name]' before proceeding. If no skill was used, say: '⚠️ No skill used — responding from base knowledge.'
 
 ### Routing Flow
 1. Check if an **active skill** covers the request → use it directly
@@ -121,26 +118,10 @@ After invoking any skill, explicitly say: '📖 Using skill: [skill-name]' befor
 
 ## 🤖 INTELLIGENT AGENT ROUTING (STEP 2 - AUTO)
 
-### Auto-Selection Protocol
-1. **Analyze (Silent)**: Detect domains from user request.
-2. **Select Agent(s)**: Choose the most appropriate specialist(s).
-3. **Inform User**: State which expertise is being applied.
-4. **Apply**: Generate response using the selected agent's persona and rules.
+> 🔴 **Leia `.agents/rules/AGENTS.md` para a tabela Keyword→Agent completa.**
+> Regra absoluta: orchestrator = SOMENTE multi-domínio (2+ agentes). NUNCA como default.
 
-### Response Format (MANDATORY)
-```markdown
-🤖 **Applying knowledge of `@[agent-name]`...**
-[Continue with specialized response]
-```
-
-### Agent Routing Checklist (Before ANY code/design)
-
-| Step | Check | If Unchecked |
-|------|-------|--------------|
-| 1 | Identified correct agent? | → STOP. Analyze domain first. |
-| 2 | Read agent's `.md` file? | → STOP. Open `.agents/agents/{agent}.md` |
-| 3 | Announced agent? | → STOP. Add announcement. |
-| 4 | Loaded required skills? | → STOP. Check `skills:` field. |
+**Protocolo:** Match keywords → Ler agent `.md` → Carregar skills do frontmatter → Anunciar ambos.
 
 ---
 
@@ -230,7 +211,7 @@ Before coding, answer: (1) Goal of agent/skill? (2) Principles to apply? (3) How
 |---|---|---|
 | **plan** | `project-planner` | 4-phase. NO CODE before Phase 4. |
 | **ask** | - | Focus on understanding. |
-| **edit** | `orchestrator` | Execute. Check {task-slug}.md first. |
+| **edit** | Keyword→Agent table | Route especialista. orchestrator só se 2+ domains. |
 
 ---
 

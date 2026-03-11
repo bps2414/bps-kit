@@ -5,6 +5,21 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.4.0] - 2026-03-11
+### Adicionado
+- **AGENTS.md**: Novo arquivo de regras dedicado ao routing de agentes, extraído do `GEMINI.md`. Contém a tabela Keyword→Agent completa com 22 agentes mapeados, regras de boundary enforcement e file type ownership. Distribuído automaticamente em `.agents/rules/AGENTS.md` (Antigravity) e `.github/AGENTS.md` (VS Code Copilot via `--vscode`).
+- **`convert_to_vscode.js`**: Suporte nativo ao `AGENTS.md` — o arquivo é convertido e copiado para `.github/AGENTS.md` com os mesmos path replacements do `GEMINI.md` (skills, vault, agents, scripts, frontmatter trigger).
+
+### Corrigido
+- **GEMINI.md**: 5 causas raiz que forçavam `Agent: orchestrator | Skill: none` como default foram eliminadas:
+  - `Auto-Selection Protocol` genérico substituído por referência à tabela concreta do `AGENTS.md`.
+  - Step 2 do checklist aponta explicitamente para `AGENTS.md` com instrução `NUNCA default orchestrator`.
+  - `PRE-FLIGHT OBRIGATÓRIO` reposicionado para pós-roteamento (passos 1-7) com revalidação anti-orchestrator.
+  - Step 5 agora carrega skills do frontmatter `skills:` do agente além do Intent Map.
+  - Gemini Mode `edit` não mais hardcoded para `orchestrator` — redireciona para Keyword→Agent table.
+  - Seção `Core Rule — Skills First` redundante removida (liberando espaço).
+- `GEMINI.md` reduzido de 279 → 182 linhas (−35%) sem perda de informação.
+
 ## [1.2.0] - 2026-03-09
 ### Adicionado
 - Novo template `ARCHITECTURE.md` distribuído junto ao kit, mapeando os 20 agentes com suas skills, skills organizadas por tier (basic/normal/extra), 12 workflows e scripts de validação disponíveis. Referenciado obrigatoriamente pelo `GEMINI.md` no startup da sessão.
