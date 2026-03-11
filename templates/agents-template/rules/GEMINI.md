@@ -219,22 +219,13 @@ Before coding, answer: (1) Goal of agent/skill? (2) Principles to apply? (3) How
 **Priority Execution Order:**
 1. **Security** → 2. **Lint** → 3. **Schema** → 4. **Tests** → 5. **SEO** → 6. **Lighthouse/E2E**
 
-**Available Scripts:**
-
-| Script | Skill | When |
-|---|---|---|
-| `security_scan.py` | vulnerability-scanner | Always on deploy |
-| `lint_runner.py` | lint-and-validate | Every code change |
-| `seo_checker.py` | seo-fundamentals | After page change |
-| `lighthouse_audit.py` | performance-profiling | Before deploy |
-
 > 🔴 **Agents & Skills can invoke ANY script** via `python .agents/skills/<skill>/scripts/<script>.py`
 
 **Rules:**
 - **Completion:** A task is NOT finished until `checklist.py` returns success.
 - **Reporting:** If it fails, fix the **Critical** blockers first (Security/Lint).
 
-### 🎭 Gemini Mode Mapping
+### 🎡 Gemini Mode Mapping
 | Mode | Agent | Behavior |
 |---|---|---|
 | **plan** | `project-planner` | 4-phase. NO CODE before Phase 4. |
