@@ -39,28 +39,28 @@ Specialist AI personas for different domains.
 
 | Agent                    | Focus                      | Skills Used                                              |
 | ------------------------ | -------------------------- | -------------------------------------------------------- |
-| `orchestrator`           | Multi-agent coordination   | clean-code, behavioral-modes, plan-writing               |
-| `project-planner`        | Discovery, task planning   | brainstorming, plan-writing                              |
-| `frontend-specialist`    | Web UI/UX                  | frontend-design, react-patterns, tailwind-patterns       |
-| `backend-specialist`     | API, business logic        | api-patterns, database-design                            |
-| `database-architect`     | Schema, SQL                | database-design, prisma-expert                           |
+| `orchestrator`           | Multi-agent coordination   | parallel-agents, behavioral-modes, plan-writing, architecture |
+| `project-planner`        | Discovery, task planning   | app-builder, plan-writing, brainstorming                 |
+| `frontend-specialist`    | Web UI/UX                  | nextjs-react-expert, tailwind-patterns, frontend-design, design-md, enhance-prompt |
+| `backend-specialist`     | API, business logic        | nodejs-best-practices, api-patterns, database-design, mcp-builder |
+| `database-architect`     | Schema, SQL                | database-design                                          |
 | `mobile-developer`       | iOS, Android, RN           | mobile-design                                            |
-| `game-developer`         | Game logic, mechanics      | —                                                        |
-| `devops-engineer`        | CI/CD, Docker              | docker-expert                                            |
-| `security-auditor`       | Security compliance        | vulnerability-scanner                                    |
-| `penetration-tester`     | Offensive security         | vulnerability-scanner                                    |
-| `test-engineer`          | Testing strategies         | testing-patterns, test-driven-development                |
+| `game-developer`         | Game logic, mechanics      | game-development (12 sub-skills)                         |
+| `devops-engineer`        | CI/CD, Docker              | deployment-procedures, server-management                 |
+| `security-auditor`       | Security compliance        | vulnerability-scanner, red-team-tactics                   |
+| `penetration-tester`     | Offensive security         | vulnerability-scanner, red-team-tactics                   |
+| `test-engineer`          | Testing strategies         | testing-patterns, tdd-workflow, webapp-testing            |
 | `debugger`               | Root cause analysis        | systematic-debugging                                     |
 | `performance-optimizer`  | Speed, Web Vitals          | performance-profiling                                    |
-| `seo-specialist`         | Ranking, visibility        | seo-fundamentals                                         |
-| `documentation-writer`   | Manuals, docs              | —                                                        |
+| `seo-specialist`         | Ranking, visibility        | seo-fundamentals, geo-fundamentals                       |
+| `documentation-writer`   | Manuals, docs              | documentation-templates                                  |
 | `product-manager`        | Requirements, user stories | plan-writing, brainstorming                              |
 | `product-owner`          | Strategy, backlog, MVP     | plan-writing, brainstorming                              |
-| `qa-automation-engineer` | E2E testing, CI pipelines  | testing-patterns                                         |
-| `code-archaeologist`     | Legacy code, refactoring   | clean-code                                               |
-| `explorer-agent`         | Codebase analysis          | —                                                        |
-| `site-builder`           | Landing pages, websites    | frontend-design, scroll-experience, enhance-prompt       |
-| `automation-specialist`  | n8n workflow automation    | n8n-mcp-tools-expert, n8n-workflow-patterns, n8n-expression-syntax |
+| `qa-automation-engineer` | E2E testing, CI pipelines  | webapp-testing, testing-patterns                          |
+| `code-archaeologist`     | Legacy code, refactoring   | refactoring-patterns, code-review-checklist               |
+| `explorer-agent`         | Codebase analysis          | architecture, plan-writing, brainstorming                 |
+| `site-builder`           | Landing pages, websites    | scroll-experience, tailwind-patterns, frontend-design, design-md, enhance-prompt |
+| `automation-specialist`  | n8n workflow automation    | n8n-mcp-tools-expert, n8n-workflow-patterns               |
 
 ---
 
@@ -119,13 +119,6 @@ Skills availability depends on the installed profile (`basic`, `normal`, or `ext
 | `test-driven-development` | TDD workflow                   |
 | `testing-patterns`        | Jest, Vitest, strategies       |
 | `vercel-deployment`       | Vercel deploy workflows        |
-| `n8n-mcp-tools-expert`    | n8n MCP tool selection & usage |
-| `n8n-workflow-patterns`   | n8n architectural patterns     |
-| `n8n-expression-syntax`   | n8n expression `{{$json.*}}`   |
-| `n8n-node-configuration`  | n8n node operation config      |
-| `n8n-validation-expert`   | n8n validation error fixing    |
-| `n8n-code-javascript`     | n8n Code node (JavaScript)     |
-| `n8n-code-python`         | n8n Code node (Python)         |
 
 ### Extra Profile (adds ~27 more skills)
 
@@ -167,8 +160,9 @@ Slash command procedures. Invoke with `/command`.
 
 | Command          | Description                     |
 | ---------------- | ------------------------------- |
+| `/automate`      | n8n workflow automation builder  |
 | `/brainstorm`    | Socratic discovery              |
-| `/build-site`    | Full website creation workflow  |
+| `/build-site`    | Cinematic landing page builder  |
 | `/create`        | Create new features             |
 | `/debug`         | Debug issues                    |
 | `/deploy`        | Deploy application              |
@@ -176,12 +170,11 @@ Slash command procedures. Invoke with `/command`.
 | `/orchestrate`   | Multi-agent coordination        |
 | `/plan`          | Task breakdown                  |
 | `/preview`       | Preview changes                 |
-| `/recall`        | Re-anchor AI to rules           |
+| `/recall`        | Re-anchor AI on rules           |
 | `/setup-brain`   | Initialize agent memory/context |
 | `/status`        | Check project status            |
 | `/test`          | Run tests                       |
 | `/ui-ux-pro-max` | Full UI/UX design workflow      |
-| `/automate`      | n8n workflow automation builder |
 
 ---
 
@@ -225,7 +218,7 @@ Scripts are embedded within skills at `.agents/skills/<skill>/scripts/`:
 | ------------------- | ----------------------------- |
 | **Total Agents**    | 22                            |
 | **Basic Skills**    | 11                            |
-| **Normal Skills**   | ~49                           |
+| **Normal Skills**   | ~42                           |
 | **Extra Skills**    | ~69                           |
 | **Vault Skills**    | 1200+                         |
 | **Total Workflows** | 15                            |
@@ -234,15 +227,15 @@ Scripts are embedded within skills at `.agents/skills/<skill>/scripts/`:
 
 ## 🔗 Quick Reference
 
-| Need     | Agent                 | Skills                                |
-| -------- | --------------------- | ------------------------------------- |
-| Web App  | `frontend-specialist` | frontend-design, react-patterns       |
-| API      | `backend-specialist`  | api-patterns, backend-dev-guidelines  |
-| Mobile   | `mobile-developer`    | mobile-design                         |
-| Database | `database-architect`  | database-design, prisma-expert        |
-| Security | `security-auditor`    | vulnerability-scanner                 |
-| Testing  | `test-engineer`       | testing-patterns, test-driven-development |
-| Debug    | `debugger`            | systematic-debugging                  |
-| Plan     | `project-planner`     | brainstorming, plan-writing           |
-| Deploy   | `devops-engineer`     | docker-expert, vercel-deployment      |
+| Need     | Agent                 | Skills                                    |
+| -------- | --------------------- | ----------------------------------------- |
+| Web App  | `frontend-specialist` | nextjs-react-expert, tailwind-patterns, frontend-design |
+| API      | `backend-specialist`  | api-patterns, nodejs-best-practices       |
+| Mobile   | `mobile-developer`    | mobile-design                             |
+| Database | `database-architect`  | database-design                           |
+| Security | `security-auditor`    | vulnerability-scanner, red-team-tactics   |
+| Testing  | `test-engineer`       | testing-patterns, tdd-workflow            |
+| Debug    | `debugger`            | systematic-debugging                      |
+| Plan     | `project-planner`     | brainstorming, plan-writing               |
+| Deploy   | `devops-engineer`     | deployment-procedures, server-management  |
 | Automate | `automation-specialist` | n8n-mcp-tools-expert, n8n-workflow-patterns |

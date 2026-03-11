@@ -82,7 +82,7 @@ Do you approve? (Y/N)
 
 > ✅ After user approval, invoke multiple agents in PARALLEL.
 
-## Available Agents (17 total)
+## Available Agents (22 total)
 
 | Agent | Domain | Use When |
 |-------|--------|----------|
@@ -94,6 +94,7 @@ Do you approve? (Y/N)
 | `security-auditor` | Security | Vulnerabilities, Auth |
 | `penetration-tester` | Security | Active testing |
 | `test-engineer` | Testing | Unit, E2E, Coverage |
+| `qa-automation-engineer` | QA | CI pipelines, E2E automation |
 | `devops-engineer` | Ops | CI/CD, Docker, Deploy |
 | `mobile-developer` | Mobile | React Native, Flutter |
 | `performance-optimizer` | Speed | Lighthouse, Profiling |
@@ -101,6 +102,11 @@ Do you approve? (Y/N)
 | `documentation-writer` | Docs | README, API docs |
 | `debugger` | Debug | Error analysis |
 | `game-developer` | Games | Unity, Godot |
+| `site-builder` | Sites | Landing pages, cinematic UX |
+| `automation-specialist` | Automation | n8n workflows, webhooks |
+| `code-archaeologist` | Legacy | Refactoring, tech debt |
+| `product-manager` | Product | Requirements, user stories |
+| `product-owner` | Strategy | MVP, backlog, vision |
 | `orchestrator` | Meta | Coordination |
 
 ---
@@ -114,12 +120,16 @@ Identify ALL domains this task touches:
 □ Backend/API  → backend-specialist
 □ Frontend/UI  → frontend-specialist
 □ Database     → database-architect
-□ Testing      → test-engineer
+□ Testing      → test-engineer, qa-automation-engineer
 □ DevOps       → devops-engineer
 □ Mobile       → mobile-developer
 □ Performance  → performance-optimizer
 □ SEO          → seo-specialist
 □ Planning     → project-planner
+□ Sites        → site-builder
+□ Automation   → automation-specialist
+□ Legacy/Debt  → code-archaeologist
+□ Games        → game-developer
 ```
 
 ### Step 2: Phase Detection

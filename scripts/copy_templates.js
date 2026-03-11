@@ -5,6 +5,7 @@ const SOURCE_GEMINI_DIR = path.join(process.env.USERPROFILE, '.gemini');
 const SOURCE_SKILLS_DIR = path.join(SOURCE_GEMINI_DIR, 'antigravity', 'skills');
 const SOURCE_VAULT_DIR = path.join(SOURCE_GEMINI_DIR, 'antigravity', 'vault');
 const SOURCE_RULE_FILE = path.join(__dirname, '..', '.agents', 'rules', 'GEMINI.md');
+const SOURCE_AGENTS_RULE_FILE = path.join(__dirname, '..', '.agents', 'rules', 'AGENTS.md');
 const SOURCE_AGENTS_DIR = path.join(__dirname, '..', 'src', 'agents');
 const SOURCE_SCRIPTS_DIR = path.join(__dirname, '..', 'src', 'scripts');
 const SOURCE_BASE_WORKFLOWS_DIR = path.join(__dirname, '..', 'src', 'workflows');
@@ -36,7 +37,9 @@ const NORMAL_SKILLS = [
     "testing-patterns", "seo-fundamentals", "page-cro", "copywriting", "git-pushing",
     "rag-engineer", "llm-app-patterns", "prompt-engineer", "dispatching-parallel-agents",
     "lint-and-validate", "vulnerability-scanner", "performance-profiling", "senior-fullstack",
-    "micro-saas-launcher"
+    "micro-saas-launcher", "design-md", "enhance-prompt", "react-components",
+    "n8n-mcp-tools-expert", "n8n-workflow-patterns", "n8n-expression-syntax",
+    "n8n-node-configuration", "n8n-validation-expert", "n8n-code-javascript", "n8n-code-python"
 ];
 
 const EXTRA_SKILLS = [
@@ -47,7 +50,7 @@ const EXTRA_SKILLS = [
     "nodejs-best-practices", "microservices-patterns", "postgres-best-practices",
     "sql-optimization-patterns", "cloud-architect", "deployment-engineer", "playwright-skill",
     "seo-content-writer", "growth-engine", "software-architecture", "domain-driven-design",
-    "code-reviewer"
+    "code-reviewer", "stitch-loop"
 ];
 
 async function copyTemplates() {
@@ -64,6 +67,14 @@ async function copyTemplates() {
     ruleContent = ruleContent.replace(/~\/\.gemini/g, './.agents');
     ruleContent = ruleContent.replace(/F:\/VSCode\/saas\/\.agents/g, './.agents');
     await fs.writeFile(ruleDest, ruleContent);
+
+    console.log("Copying AGENTS.md...");
+    const agentsRuleDest = path.join(DEST_DIR, 'agents-template', 'rules', 'AGENTS.md');
+    if (await fs.pathExists(SOURCE_AGENTS_RULE_FILE)) {
+        await fs.copy(SOURCE_AGENTS_RULE_FILE, agentsRuleDest);
+    } else {
+        console.warn('[WARN] .agents/rules/AGENTS.md not found — skipping.');
+    }
 
     console.log("Copying Normal Skills...");
     for (const skill of NORMAL_SKILLS) {

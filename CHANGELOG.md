@@ -5,6 +5,18 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.4.1] - 2026-03-11
+### Corrigido
+- **`automation-specialist.md`**: Arquivo faltando em `src/agents/` — criado e sincronizado com `templates/`.
+- **`debugger.md`**: Frontmatter incompleto em `src/` e `templates/` — adicionados campos `tools` e `model: inherit` faltantes.
+- **`frontend-specialist.md`**: Dois skills (`design-md`, `enhance-prompt`) faltando em `src/` — sincronizado com template.
+- **`setup-brain.md`** em `src/`: Passo 6 ainda continha a versão antiga (editava GEMINI.md) — sincronizado com a versão corrigida do template.
+- **`AGENTS.md`**: Coluna "Skills (frontmatter)" corrigida para 20/22 agentes — agora reflete exatamente o frontmatter `skills:` real de cada agente (removido `clean-code` genérico, adicionados skills específicos por domínio).
+- **`orchestrate.md`**: Tabela de agentes listava apenas 16 agentes — atualizada para todos os 22, incluindo `qa-automation-engineer`, `site-builder`, `automation-specialist`, `code-archaeologist`, `product-manager`, `product-owner`. Checklist de domínios expandida com 4 novos domínios.
+- **`ARCHITECTURE.md`**: Corrigidas contagens (20→22 agentes, 12→15 workflows), tabela de agentes atualizada com skills reais, workflows `/automate`, `/build-site` e `/recall` adicionados, Quick Reference atualizado.
+- **`copy_templates.js`**: Adicionado step de cópia do `AGENTS.md` ao pipeline (com fallback de aviso). `NORMAL_SKILLS` expandida com `design-md`, `enhance-prompt`, `react-components` e 7 skills `n8n-*`. `EXTRA_SKILLS` expandida com `stitch-loop`.
+- **`.agents/rules/AGENTS.md`**: Criado como fonte para o pipeline `copy_templates.js`.
+
 ## [1.4.0] - 2026-03-11
 ### Adicionado
 - **AGENTS.md**: Novo arquivo de regras dedicado ao routing de agentes, extraído do `GEMINI.md`. Contém a tabela Keyword→Agent completa com 22 agentes mapeados, regras de boundary enforcement e file type ownership. Distribuído automaticamente em `.agents/rules/AGENTS.md` (Antigravity) e `.github/AGENTS.md` (VS Code Copilot via `--vscode`).

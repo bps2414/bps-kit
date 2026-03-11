@@ -36,35 +36,12 @@ Este workflow permite que eu (o seu agente Antigravity) faça uma varredura comp
      - Ativar: copiar de `./.agents/vault/{skill}` → `./.agents/skills/{skill}`
    - Confirme o total final de skills ativas após os movimentos.
 
-6. **Atualização da Rule File (OBRIGATÓRIO após mover skills)**:
-   - Detecte qual formato está instalado no repositório:
-     - **VS Code / Copilot**: Rule File = `.github/copilot-instructions.md`
-     - **Antigravity padrão (Cursor/Windsurf)**: Rule File = `.agents/rules/GEMINI.md`
-   - Após mover as skills, edite a Rule File atualizando TODOS os trechos que referenciam nomes de skills:
-
-   **a) `Skill Auto-Routing System` → contagem de active skills:**
-   ```
-   - **Active skills** (~N): in `./.agents/skills/` (ou `./.copilot-skills/` no VS Code)
-   ```
-   Substituir N pelo número real de skills ativas após a otimização.
-
-   **b) `Intent → Skill Routing Map`:**
-   - Remover todas as linhas de intent que apontam para skills que foram movidas para o vault.
-   - Adicionar/ajustar entradas baseadas nas novas skills ativas e na stack detectada.
-   - Exemplo: se `tailwind-patterns` foi para o vault, remover da linha `UI/component`.
-
-   **c) `Project Type Routing` (TIER 1):**
-   - Atualizar a tabela de agentes/skills para refletir o tipo real de projeto detectado.
-   - Adicionar nota `> 🔴 Este projeto é [tipo detectado]. Não usar agentes de [tipos irrelevantes].`
-
-   **d) `Final Checklist` (TIER 1):**
-   - Remover linhas de scripts que dependem de skills agora no vault (ex: `ux_audit.py → frontend-design`).
-   - Manter apenas scripts cujas skills dependentes ainda estejam ativas.
-
-   **e) `QUICK REFERENCE`:**
-   - Atualizar `Masters` e `Key Skills` para refletir os agentes/skills relevantes ao projeto.
+6. **Atualização do ARCHITECTURE.md (OBRIGATÓRIO após mover skills)**:
+   - Atualize SOMENTE a tabela de skills no `ARCHITECTURE.md` para refletir quais skills estão ativas vs vault.
+   - **🔴 NÃO EDITE os arquivos de regras (GEMINI.md, AGENTS.md, copilot-instructions.md).** Esses arquivos contêm routing genérico que funciona para qualquer stack — o Intent Map e a Keyword→Agent table são universais e não devem ser alterados pelo setup-brain.
 
 ### Critérios de Sucesso
 - **Precisão**: Apenas skills de altíssimo valor agregado (diretamente conectadas com a stack) serão movidas. Não encha o contexto em vão. Você foi programado para manter seu Token footprint baixo.
-- A Rule File deve estar 100% sincronizada com as skills ativas — zero referências a skills no vault.
+- O `ARCHITECTURE.md` deve refletir as skills ativas atualizadas.
+- **🔴 PROIBIDO**: Editar GEMINI.md, AGENTS.md, ou copilot-instructions.md. O routing é genérico por design.
 - Encerre rodando uma mensagem informando o resultado "Cérebro Calibrado e Otimizado para este ecossistema."

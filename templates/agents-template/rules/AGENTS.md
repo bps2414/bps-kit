@@ -19,28 +19,28 @@ trigger: always_on
 
 | Keywords no request | Agent | Skills (frontmatter) |
 |---|---|---|
-| component, react, ui, ux, css, tailwind, frontend, hook, state | `frontend-specialist` | clean-code, frontend-design, react-patterns, tailwind-patterns |
-| landing page, site, website, hero, parallax, one-pager | `site-builder` | scroll-experience, enhance-prompt, frontend-design, design-md |
-| backend, server, api, endpoint, auth, express, fastapi, hono | `backend-specialist` | api-patterns, database-design, backend-dev-guidelines |
-| schema, SQL, migration, prisma, drizzle, database design | `database-architect` | database-design, prisma-expert |
+| component, react, ui, ux, css, tailwind, frontend, hook, state | `frontend-specialist` | nextjs-react-expert, web-design-guidelines, tailwind-patterns, frontend-design, design-md, enhance-prompt |
+| landing page, site, website, hero, parallax, one-pager | `site-builder` | scroll-experience, tailwind-patterns, react-patterns, frontend-design, design-md, enhance-prompt, react-components |
+| backend, server, api, endpoint, auth, express, fastapi, hono | `backend-specialist` | nodejs-best-practices, api-patterns, database-design, mcp-builder |
+| schema, SQL, migration, prisma, drizzle, database design | `database-architect` | database-design |
 | bug, error, crash, not working, broken, fix, investigate | `debugger` | systematic-debugging |
-| test, testing, coverage, TDD, E2E, jest, vitest | `test-engineer` | testing-patterns, test-driven-development |
+| test, testing, coverage, TDD, E2E, jest, vitest | `test-engineer` | testing-patterns, tdd-workflow, webapp-testing, code-review-checklist |
 | mobile, iOS, Android, React Native, Flutter, Expo | `mobile-developer` | mobile-design |
-| security, vulnerability, audit, OWASP | `security-auditor` | vulnerability-scanner |
-| pentest, red team, exploit | `penetration-tester` | vulnerability-scanner |
-| deploy, CI/CD, Docker, infrastructure, PM2 | `devops-engineer` | docker-expert |
+| security, vulnerability, audit, OWASP | `security-auditor` | vulnerability-scanner, red-team-tactics, api-patterns |
+| pentest, red team, exploit | `penetration-tester` | vulnerability-scanner, red-team-tactics, api-patterns |
+| deploy, CI/CD, Docker, infrastructure, PM2 | `devops-engineer` | deployment-procedures, server-management |
 | performance, speed, Web Vitals, optimize, profiling | `performance-optimizer` | performance-profiling |
-| SEO, meta tags, ranking, sitemap | `seo-specialist` | seo-fundamentals |
-| plan, roadmap, task breakdown, milestones | `project-planner` | brainstorming, plan-writing |
+| SEO, meta tags, ranking, sitemap | `seo-specialist` | seo-fundamentals, geo-fundamentals |
+| plan, roadmap, task breakdown, milestones | `project-planner` | app-builder, plan-writing, brainstorming |
 | requirements, user stories, backlog | `product-manager` | plan-writing, brainstorming |
 | MVP, strategy, product vision | `product-owner` | plan-writing, brainstorming |
-| game, unity, godot, phaser, multiplayer | `game-developer` | — |
-| n8n, webhook, automation, workflow automation | `automation-specialist` | n8n-mcp-tools-expert, n8n-workflow-patterns |
-| docs, README, documentation, manual | `documentation-writer` | — |
-| legacy code, refactor, tech debt | `code-archaeologist` | clean-code |
-| codebase analysis, map, discovery, explore | `explorer-agent` | — |
-| E2E automation, CI pipeline, QA pipeline | `qa-automation-engineer` | testing-patterns |
-| coordinate, orchestrate, 2+ domains simultâneos | `orchestrator` | plan-writing, behavioral-modes |
+| game, unity, godot, phaser, multiplayer | `game-developer` | game-development (12 sub-skills) |
+| n8n, webhook, automation, workflow automation | `automation-specialist` | n8n-mcp-tools-expert, n8n-workflow-patterns, n8n-expression-syntax, n8n-node-configuration, n8n-validation-expert |
+| docs, README, documentation, manual | `documentation-writer` | documentation-templates |
+| legacy code, refactor, tech debt | `code-archaeologist` | refactoring-patterns, code-review-checklist |
+| codebase analysis, map, discovery, explore | `explorer-agent` | architecture, plan-writing, brainstorming, systematic-debugging |
+| E2E automation, CI pipeline, QA pipeline | `qa-automation-engineer` | webapp-testing, testing-patterns, web-design-guidelines |
+| coordinate, orchestrate, 2+ domains simultâneos | `orchestrator` | parallel-agents, behavioral-modes, plan-writing, brainstorming, architecture |
 
 ### Protocolo de Uso
 
