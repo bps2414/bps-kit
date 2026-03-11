@@ -104,6 +104,9 @@ O **BPS Kit** deve sua fundação brilhante e seu mar enciclopédico de regras a
 3. **[stitch-skills (by google-labs-code)](https://github.com/google-labs-code/stitch-skills)**  
    O cérebro visual e criativo do BPS Kit. Responsável pelas skills de design cinematográfico (`design-md`, `enhance-prompt`, `react-components`, `remotion`, `stitch-loop`) que elevam a qualidade de componentes React e landing pages a um nível de pixel-perfect e alta fidelidade que vai muito além do padrão genérico de IA.
 
+4. **[n8n-skills + n8n-mcp (by czlonkowski)](https://github.com/czlonkowski/n8n-skills)**  
+   A camada de inteligência para automação n8n do BPS Kit. As 7 skills especializadas (`n8n-mcp-tools-expert`, `n8n-workflow-patterns`, `n8n-expression-syntax`, `n8n-node-configuration`, `n8n-validation-expert`, `n8n-code-javascript`, `n8n-code-python`) e o servidor MCP [`n8n-mcp`](https://github.com/czlonkowski/n8n-mcp) que provê acesso a 1.084 nós e 2.700+ templates de workflow diretamente do IDE.
+
 A engenharia inteira do **BPS Kit** serve massivamente para unificar essas três titânicas inteligências em um fluxo só — através da magia do Auto-Routing isolacionista por Glob e do Vaulting Comprimido — ultrapassando enfim as limitações brutais da context-window. Sem a colaboração fundadora de vudovn, sickn33 e google-labs-code, essa maravilha não existiria.
 
 ---

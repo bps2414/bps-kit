@@ -8,10 +8,10 @@
 
 BPS Kit is a modular system consisting of:
 
-- **20 Specialist Agents** — Role-based AI personas
+- **22 Specialist Agents** — Role-based AI personas
 - **Active Skills** — Domain-specific knowledge modules (varies by profile)
 - **1200+ Vault Skills** — Extended skill library discoverable via index
-- **12 Workflows** — Slash command procedures
+- **15 Workflows** — Slash command procedures
 - **2 Master Scripts** — Validation & verification
 
 ---
@@ -24,16 +24,16 @@ BPS Kit is a modular system consisting of:
 ├── VAULT_INDEX.md           # Vault skill discovery index
 ├── rules/
 │   └── GEMINI.md            # Master rule file (always loaded)
-├── agents/                  # 20 Specialist Agents
+├── agents/                  # 22 Specialist Agents
 ├── skills/                  # Active Skills (profile-dependent)
 ├── vault/                   # 1200+ Vault Skills
-├── workflows/               # 12 Slash Commands
+├── workflows/               # 15 Slash Commands
 └── scripts/                 # Master Validation Scripts
 ```
 
 ---
 
-## 🤖 Agents (20)
+## 🤖 Agents (22)
 
 Specialist AI personas for different domains.
 
@@ -60,6 +60,7 @@ Specialist AI personas for different domains.
 | `code-archaeologist`     | Legacy code, refactoring   | clean-code                                               |
 | `explorer-agent`         | Codebase analysis          | —                                                        |
 | `site-builder`           | Landing pages, websites    | frontend-design, scroll-experience, enhance-prompt       |
+| `automation-specialist`  | n8n workflow automation    | n8n-mcp-tools-expert, n8n-workflow-patterns, n8n-expression-syntax |
 
 ---
 
@@ -118,6 +119,13 @@ Skills availability depends on the installed profile (`basic`, `normal`, or `ext
 | `test-driven-development` | TDD workflow                   |
 | `testing-patterns`        | Jest, Vitest, strategies       |
 | `vercel-deployment`       | Vercel deploy workflows        |
+| `n8n-mcp-tools-expert`    | n8n MCP tool selection & usage |
+| `n8n-workflow-patterns`   | n8n architectural patterns     |
+| `n8n-expression-syntax`   | n8n expression `{{$json.*}}`   |
+| `n8n-node-configuration`  | n8n node operation config      |
+| `n8n-validation-expert`   | n8n validation error fixing    |
+| `n8n-code-javascript`     | n8n Code node (JavaScript)     |
+| `n8n-code-python`         | n8n Code node (Python)         |
 
 ### Extra Profile (adds ~27 more skills)
 
@@ -153,13 +161,14 @@ Skills availability depends on the installed profile (`basic`, `normal`, or `ext
 
 ---
 
-## 🔄 Workflows (12)
+## 🔄 Workflows (15)
 
 Slash command procedures. Invoke with `/command`.
 
 | Command          | Description                     |
 | ---------------- | ------------------------------- |
 | `/brainstorm`    | Socratic discovery              |
+| `/build-site`    | Full website creation workflow  |
 | `/create`        | Create new features             |
 | `/debug`         | Debug issues                    |
 | `/deploy`        | Deploy application              |
@@ -167,10 +176,12 @@ Slash command procedures. Invoke with `/command`.
 | `/orchestrate`   | Multi-agent coordination        |
 | `/plan`          | Task breakdown                  |
 | `/preview`       | Preview changes                 |
+| `/recall`        | Re-anchor AI to rules           |
 | `/setup-brain`   | Initialize agent memory/context |
 | `/status`        | Check project status            |
 | `/test`          | Run tests                       |
 | `/ui-ux-pro-max` | Full UI/UX design workflow      |
+| `/automate`      | n8n workflow automation builder |
 
 ---
 
@@ -212,12 +223,12 @@ Scripts are embedded within skills at `.agents/skills/<skill>/scripts/`:
 
 | Metric              | Value                         |
 | ------------------- | ----------------------------- |
-| **Total Agents**    | 20 (+1 site-builder)          |
+| **Total Agents**    | 22                            |
 | **Basic Skills**    | 11                            |
-| **Normal Skills**   | ~42                           |
+| **Normal Skills**   | ~49                           |
 | **Extra Skills**    | ~69                           |
 | **Vault Skills**    | 1200+                         |
-| **Total Workflows** | 12                            |
+| **Total Workflows** | 15                            |
 
 ---
 
@@ -234,3 +245,4 @@ Scripts are embedded within skills at `.agents/skills/<skill>/scripts/`:
 | Debug    | `debugger`            | systematic-debugging                  |
 | Plan     | `project-planner`     | brainstorming, plan-writing           |
 | Deploy   | `devops-engineer`     | docker-expert, vercel-deployment      |
+| Automate | `automation-specialist` | n8n-mcp-tools-expert, n8n-workflow-patterns |

@@ -97,6 +97,7 @@ After invoking any skill, explicitly say: '📖 Using skill: [skill-name]' befor
 | **API/backend** | api-patterns (N) + backend-dev-guidelines (N) |
 | **Git/push** | verification-before-completion → git-pushing |
 | **AI/LLM/RAG** | rag-engineer (N) + llm-app-patterns (N) + prompt-engineer (N) |
+| **n8n / webhook / automation** | n8n-mcp-tools-expert (N) + n8n-workflow-patterns (N) |
 | **Multi-step plan** | plan-writing → executing-plans. Independent: dispatching-parallel-agents (N) |
 | **Other domain** | Search VAULT_INDEX.md → read skill from vault |
 

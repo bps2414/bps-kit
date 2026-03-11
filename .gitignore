@@ -6,3 +6,10 @@ test-install2/
 .copilot-vault/
 .copilot-skills/
 .github/
+
+# Cloned repos (not part of the package)
+n8n-mcp/
+n8n-skills/
+
+# Planning docs
+implementation_plan.md.resolved
