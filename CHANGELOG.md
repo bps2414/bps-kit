@@ -5,6 +5,18 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.5.0] - 2026-03-12
+### Modificado
+- **Migração estrutural completa para GitHub Copilot**: A conversão `--vscode` agora segue rigorosamente a arquitetura nativa do Copilot:
+  - **Rules** (`GEMINI.md`, `AGENTS.md`) agora vão para `.github/instructions/` como `gemini.instructions.md` e `agents.instructions.md` com frontmatter `applyTo: "**"` — anteriormente exportavam para `.github/copilot-instructions.md` e `.github/AGENTS.md` flat files.
+  - **Agents** permanecem em `.github/agents/*.agent.md` (sem mudança).
+  - **Workflows/Prompts** permanecem em `.github/prompts/*.prompt.md` (sem mudança).
+  - **Skills** permanecem em `.copilot-skills/` (sem mudança).
+- **`convert_to_vscode.js`**: Refatorado com helper centralizado `applyPathReplacements()` eliminando duplicação de regex em 3 blocos. Todas as 3 cópias do script (bin/, templates/, src/) foram sincronizadas.
+- **`cli.js`**: Mensagem pós-instalação VS Code atualizada para referenciar `.github/instructions/`.
+- **`README.md`**: Seção "O que acontece após a instalação (VS Code)" reescrita com mapeamento correto.
+- **`setup-brain.md`**: Lista de arquivos protegidos atualizada (ambas cópias: templates/ e src/).
+
 ## [1.4.1] - 2026-03-11
 ### Corrigido
 - **`automation-specialist.md`**: Arquivo faltando em `src/agents/` — criado e sincronizado com `templates/`.

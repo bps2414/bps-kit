@@ -471,6 +471,7 @@ async def load_project_context():
     """
     agents_md_locations = [
         "AGENTS.md",
+        ".github/instructions/agents.instructions.md",
         ".github/AGENTS.md",
         "docs/AGENTS.md"
     ]

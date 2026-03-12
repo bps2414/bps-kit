@@ -254,7 +254,7 @@ async function runInstaller(opts = {}) {
 
         console.log(chalk.yellow('\n💡 Next Steps:'));
         if (opts.vscode) {
-            console.log(chalk.white('1. O GitHub Copilot Agent já deve estar lendo o `.github/copilot-instructions.md`.'));
+            console.log(chalk.white('1. O GitHub Copilot Agent já deve estar lendo o `.github/instructions/`.'));
         } else {
             console.log(chalk.white('1. O sistema Antigravity já deve estar lendo o `.agents/rules/GEMINI.md`.'));
         }

@@ -9,52 +9,55 @@ const chalk = require('chalk');
  */
 async function convertToVsCode(destAgents, destBase) {
     const gitHubDir = path.join(destBase, '.github');
+    const instructionsDir = path.join(gitHubDir, 'instructions');
 
     console.log(chalk.dim('   [VS Code] Convertendo arquivos para sintaxe do Copilot...'));
 
-    // Garantir que o diretório .github existe antes de qualquer escrita
+    // Garantir que os diretórios .github e .github/instructions existem antes de qualquer escrita
     await fs.ensureDir(gitHubDir);
+    await fs.ensureDir(instructionsDir);
 
-    // 1. Converter a rule master GEMINI.md em copilot-instructions.md
-    const geminiPath = path.join(destAgents, 'rules', 'GEMINI.md');
-    if (await fs.pathExists(geminiPath)) {
-        let content = await fs.readFile(geminiPath, 'utf8');
-        // Adaptamos os caminhos na rule principal para o contexto do .github/ do VS Code
-        // Agora, skills são arquivos normais .md fora da pasta .github/ para evitar a autoinjeção estática e o overhead de 66 referências.
-
+    // Helper: aplica os path replacements padrão de .agents/ → Copilot
+    function applyPathReplacements(content) {
         // Specific path patterns FIRST (before general .agents/ catch-all)
         content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
         content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
-        content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
-        content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/AGENTS.md');
+        content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/instructions/gemini.instructions.md');
+        content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/instructions/agents.instructions.md');
         content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
         content = content.replace(/\.?\/?\.agents\/ARCHITECTURE\.md/g, '.github/ARCHITECTURE.md');
         content = content.replace(/\.?\/?\.agents\/agents\//g, '.github/agents/');
         content = content.replace(/\.?\/?\.agents\/scripts\//g, '.github/scripts/');
+        return content;
+    }
+
+    // 1. Converter a rule master GEMINI.md em .github/instructions/gemini.instructions.md
+    const geminiPath = path.join(destAgents, 'rules', 'GEMINI.md');
+    if (await fs.pathExists(geminiPath)) {
+        let content = await fs.readFile(geminiPath, 'utf8');
+
+        content = applyPathReplacements(content);
 
         // Trocar sintaxe bruta de trigger pelo ApplyTo nativo
-        content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**/*"');
+        content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**"');
+
+        // Garantir frontmatter correto para .instructions.md do Copilot
+        content = content.replace(/^---[\s\S]*?---/, `---\napplyTo: "**"\n---`);
 
         // As workflows no VS Code estao desabrigadas da pasta nativa, sugerimos le-las do vault ou inline
         content += `\n\n## 🔄 Workflows Base\nAs workflows antigas de Cursor (/brainstorm, etc) agora devem ser invocadas naturalmente no chat: "Rode o fluxo de brainstorm". Consulte o diretório .github/prompts/ para contexto.\n`;
 
-        await fs.writeFile(path.join(gitHubDir, 'copilot-instructions.md'), content);
+        await fs.writeFile(path.join(instructionsDir, 'gemini.instructions.md'), content);
     }
 
-    // 1.1 Converter AGENTS.md (routing rules) com os mesmos path replacements
+    // 1.1 Converter AGENTS.md (routing rules) em .github/instructions/agents.instructions.md
     const agentsMdPath = path.join(destAgents, 'rules', 'AGENTS.md');
     if (await fs.pathExists(agentsMdPath)) {
         let content = await fs.readFile(agentsMdPath, 'utf8');
-        content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
-        content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
-        content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
-        content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/AGENTS.md');
-        content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
-        content = content.replace(/\.?\/?\.agents\/ARCHITECTURE\.md/g, '.github/ARCHITECTURE.md');
-        content = content.replace(/\.?\/?\.agents\/agents\//g, '.github/agents/');
-        content = content.replace(/\.?\/?\.agents\/scripts\//g, '.github/scripts/');
-        content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**/*"');
-        await fs.writeFile(path.join(gitHubDir, 'AGENTS.md'), content);
+        content = applyPathReplacements(content);
+        content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**"');
+        content = content.replace(/^---[\s\S]*?---/, `---\napplyTo: "**"\n---`);
+        await fs.writeFile(path.join(instructionsDir, 'agents.instructions.md'), content);
     }
 
     // 2. Mover as skills ativas inteiras (em vez de achatar) para preservar scripts em python embutidos e sub documentações!
@@ -118,14 +121,9 @@ ${content}`;
 
                 // Converter referências visuais e lógicas residuais do Antigravity nativo 
                 // para o equivalente funcional da arquitetura VS Code de forma escalonada!
-                content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
-                content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
-                content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
-                content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
-                content = content.replace(/\.?\/?\.agents\/agents\//g, '.github/agents/');
-                content = content.replace(/\.?\/?\.agents\/scripts\//g, '.github/scripts/');
+                content = applyPathReplacements(content);
                 content = content.replace(/\.?\/?\.agents\//g, '.github/');
-                content = content.replace(/GEMINI\.md/g, 'copilot-instructions.md');
+                content = content.replace(/GEMINI\.md/g, 'gemini.instructions.md');
 
                 // Formato exigido para GitHub Copilot Prompts (.prompt.md)
                 const vsCodePromptContent = `---
@@ -143,11 +141,8 @@ ${content}`;
     const archSrc = path.join(destAgents, 'ARCHITECTURE.md');
     if (await fs.pathExists(archSrc)) {
         let archContent = await fs.readFile(archSrc, 'utf8');
-        archContent = archContent.replace(/\.agents\/skills\//g, '.copilot-skills/');
-        archContent = archContent.replace(/\.agents\/vault\//g, '.copilot-vault/');
-        archContent = archContent.replace(/\.agents\/agents\//g, '.github/agents/');
-        archContent = archContent.replace(/\.agents\/scripts\//g, '.github/scripts/');
-        archContent = archContent.replace(/\.agents\//g, '.github/');
+        archContent = applyPathReplacements(archContent);
+        archContent = archContent.replace(/\.?\/?\.agents\//g, '.github/');
         await fs.writeFile(path.join(gitHubDir, 'ARCHITECTURE.md'), archContent);
     }
 
