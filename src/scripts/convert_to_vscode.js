@@ -21,7 +21,7 @@ async function convertToVsCode(destAgents, destBase) {
     function applyPathReplacements(content) {
         content = content.replace(/\.?\/?\.agents\/skills\//g, '.github/skills/');
         content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
-        content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/instructions/gemini.instructions.md');
+        content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/copilot-instructions.md');
         content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/instructions/agents.instructions.md');
         content = content.replace(/\.?\/?\.agents\/VAULT_INDEX\.md/g, '.github/VAULT_INDEX.md');
         content = content.replace(/\.?\/?\.agents\/ARCHITECTURE\.md/g, '.github/ARCHITECTURE.md');
@@ -30,17 +30,18 @@ async function convertToVsCode(destAgents, destBase) {
         return content;
     }
 
-    // 1. Converter a rule master GEMINI.md em .github/instructions/gemini.instructions.md
+    // 1. Converter a rule master GEMINI.md em .github/copilot-instructions.md
     const geminiPath = path.join(destAgents, 'rules', 'GEMINI.md');
     if (await fs.pathExists(geminiPath)) {
         let content = await fs.readFile(geminiPath, 'utf8');
         content = applyPathReplacements(content);
-        content = content.replace(/trigger:\s*always_on/g, 'applyTo: "**"');
-        content = content.replace(/^---[\s\S]*?---/, `---\napplyTo: "**"\n---`);
+
+        // Remover frontmatter — copilot-instructions.md não usa frontmatter
+        content = content.replace(/^---[\s\S]*?---\n?/, '');
 
         content += `\n\n## 🔄 Workflows Base\nAs workflows antigas de Cursor (/brainstorm, etc) agora devem ser invocadas naturalmente no chat: "Rode o fluxo de brainstorm". Consulte o diretório .github/prompts/ para contexto.\n`;
 
-        await fs.writeFile(path.join(instructionsDir, 'gemini.instructions.md'), content);
+        await fs.writeFile(path.join(gitHubDir, 'copilot-instructions.md'), content);
     }
 
     // 1.1 Converter AGENTS.md (routing rules) em .github/instructions/agents.instructions.md
@@ -103,7 +104,7 @@ async function convertToVsCode(destAgents, destBase) {
                 const promptName = workflow.replace('.md', '');
                 content = applyPathReplacements(content);
                 content = content.replace(/\.?\/?\.agents\//g, '.github/');
-                content = content.replace(/GEMINI\.md/g, 'gemini.instructions.md');
+                content = content.replace(/GEMINI\.md/g, 'copilot-instructions.md');
                 const vsCodePromptContent = `---\nagent: agent\n---\n${content}`;
                 await fs.writeFile(path.join(copilotPromptsDir, `${promptName}.prompt.md`), vsCodePromptContent);
             }

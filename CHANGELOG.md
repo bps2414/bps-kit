@@ -5,6 +5,15 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.5.2] - 2026-03-12
+### Modificado
+- **`GEMINI.md` agora é convertido para `.github/copilot-instructions.md`** ao usar `--vscode`, em vez de `.github/instructions/gemini.instructions.md` — esse é o arquivo de maior prioridade no GitHub Copilot e não usa frontmatter.
+  - Frontmatter removido automáticamente durante a conversão (`.github/copilot-instructions.md` não aceita frontmatter).
+  - `applyPathReplacements()`: regex `.agents/rules/GEMINI.md` → `.github/copilot-instructions.md` atualizado nas 3 cópias do converter.
+  - Conversão de workflows: `GEMINI.md` → `copilot-instructions.md` atualizado.
+- **`setup-brain.md`**: Lista de arquivos protegidos atualizada para `copilot-instructions.md` (ambas cópias: templates/ e src/).
+- **Workflows faltantes adicionados**: `automate.prompt.md`, `build-site.prompt.md`, `recall.prompt.md` agora gerados corretamente pelo converter. `automate.md` adicionado a `src/workflows/`.
+
 ## [1.5.1] - 2026-03-12
 ### Modificado
 - **Skills ativas agora vão para `.github/skills/`** ao usar `--vscode`, em vez de `.copilot-skills/` — alinhado com a convenção nativa do GitHub Copilot (dentro de `.github/`).

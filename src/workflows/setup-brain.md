@@ -38,10 +38,10 @@ Este workflow permite que eu (o seu agente Antigravity) faça uma varredura comp
 
 6. **Atualização do ARCHITECTURE.md (OBRIGATÓRIO após mover skills)**:
    - Atualize SOMENTE a tabela de skills no `ARCHITECTURE.md` para refletir quais skills estão ativas vs vault.
-   - **🔴 NÃO EDITE os arquivos de regras (GEMINI.md, AGENTS.md, gemini.instructions.md, agents.instructions.md).** Esses arquivos contêm routing genérico que funciona para qualquer stack — o Intent Map e a Keyword→Agent table são universais e não devem ser alterados pelo setup-brain.
+   - **🔴 NÃO EDITE os arquivos de regras (GEMINI.md, AGENTS.md, copilot-instructions.md, agents.instructions.md).** Esses arquivos contêm routing genérico que funciona para qualquer stack — o Intent Map e a Keyword→Agent table são universais e não devem ser alterados pelo setup-brain.
 
 ### Critérios de Sucesso
 - **Precisão**: Apenas skills de altíssimo valor agregado (diretamente conectadas com a stack) serão movidas. Não encha o contexto em vão. Você foi programado para manter seu Token footprint baixo.
 - O `ARCHITECTURE.md` deve refletir as skills ativas atualizadas.
-- **🔴 PROIBIDO**: Editar GEMINI.md, AGENTS.md, gemini.instructions.md, ou agents.instructions.md. O routing é genérico por design.
+- **🔴 PROIBIDO**: Editar GEMINI.md, AGENTS.md, copilot-instructions.md, ou agents.instructions.md. O routing é genérico por design.
 - Encerre rodando uma mensagem informando o resultado "Cérebro Calibrado e Otimizado para este ecossistema."
