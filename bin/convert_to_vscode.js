@@ -20,7 +20,7 @@ async function convertToVsCode(destAgents, destBase) {
     // Helper: aplica os path replacements padrão de .agents/ → Copilot
     function applyPathReplacements(content) {
         // Specific path patterns FIRST (before general .agents/ catch-all)
-        content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
+        content = content.replace(/\.?\/?\.agents\/skills\//g, '.github/skills/');
         content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
         content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/instructions/gemini.instructions.md');
         content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/instructions/agents.instructions.md');
@@ -60,10 +60,9 @@ async function convertToVsCode(destAgents, destBase) {
         await fs.writeFile(path.join(instructionsDir, 'agents.instructions.md'), content);
     }
 
-    // 2. Mover as skills ativas inteiras (em vez de achatar) para preservar scripts em python embutidos e sub documentações!
-    // Importante: NÃO alocamos em .github/skills pois o Copilot engole todos os Markdowns de lá e causa sobrecarga de +60 referências!
+    // 2. Mover as skills ativas inteiras para .github/skills/
     const skillsDest = path.join(destAgents, 'skills');
-    const copilotSkillsDir = path.join(destBase, '.copilot-skills');
+    const copilotSkillsDir = path.join(gitHubDir, 'skills');
 
     if (await fs.pathExists(skillsDest)) {
         await fs.move(skillsDest, copilotSkillsDir, { overwrite: true });
@@ -147,10 +146,19 @@ ${content}`;
     }
 
     // 8. Mover scripts de validação (checklist.py, verify_all.py) para .github/scripts/
+    // e atualizar paths internos de .agents/skills/ → .github/skills/
     const scriptsSrc = path.join(destAgents, 'scripts');
     const scriptsDestDir = path.join(gitHubDir, 'scripts');
     if (await fs.pathExists(scriptsSrc)) {
         await fs.move(scriptsSrc, scriptsDestDir, { overwrite: true });
+        // Atualizar paths nos scripts Python movidos
+        const pyFiles = (await fs.readdir(scriptsDestDir)).filter(f => f.endsWith('.py'));
+        for (const pyFile of pyFiles) {
+            const pyPath = path.join(scriptsDestDir, pyFile);
+            let pyContent = await fs.readFile(pyPath, 'utf8');
+            pyContent = pyContent.replace(/\.agents\/skills\//g, '.github/skills/');
+            await fs.writeFile(pyPath, pyContent);
+        }
     }
 
     // Limpeza pesada! Como o ambiente ja foi migrado de .agents para .github e .copilot-vault, delete a origem da instalacao hibrida.

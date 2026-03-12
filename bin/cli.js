@@ -45,7 +45,7 @@ ${chalk.bold('EXAMPLES:')}
 
 ${chalk.bold('TARGETS:')}
   ${chalk.cyan('Antigravity IDE')} ${chalk.dim('(primary)')}  →  ${chalk.dim('.agents/')}
-  ${chalk.cyan('VS Code Copilot')} ${chalk.dim('(--vscode)')} →  ${chalk.dim('.github/')} + ${chalk.dim('.copilot-skills/')}
+  ${chalk.cyan('VS Code Copilot')} ${chalk.dim('(--vscode)')} →  ${chalk.dim('.github/')} + ${chalk.dim('.github/skills/')}
 `);
 }
 

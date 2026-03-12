@@ -19,7 +19,7 @@ async function convertToVsCode(destAgents, destBase) {
 
     // Helper: aplica os path replacements padrão de .agents/ → Copilot
     function applyPathReplacements(content) {
-        content = content.replace(/\.?\/?\.agents\/skills\//g, '.copilot-skills/');
+        content = content.replace(/\.?\/?\.agents\/skills\//g, '.github/skills/');
         content = content.replace(/\.?\/?\.agents\/vault\//g, '.copilot-vault/');
         content = content.replace(/\.?\/?\.agents\/rules\/GEMINI\.md/g, '.github/instructions/gemini.instructions.md');
         content = content.replace(/\.?\/?\.agents\/rules\/AGENTS\.md/g, '.github/instructions/agents.instructions.md');
@@ -53,9 +53,9 @@ async function convertToVsCode(destAgents, destBase) {
         await fs.writeFile(path.join(instructionsDir, 'agents.instructions.md'), content);
     }
 
-    // 2. Mover as skills ativas inteiras para .copilot-skills/
+    // 2. Mover as skills ativas inteiras para .github/skills/
     const skillsDest = path.join(destAgents, 'skills');
-    const copilotSkillsDir = path.join(destBase, '.copilot-skills');
+    const copilotSkillsDir = path.join(gitHubDir, 'skills');
     if (await fs.pathExists(skillsDest)) {
         await fs.move(skillsDest, copilotSkillsDir, { overwrite: true });
     }
@@ -120,10 +120,18 @@ async function convertToVsCode(destAgents, destBase) {
     }
 
     // 8. Mover scripts de validação para .github/scripts/
+    // e atualizar paths internos de .agents/skills/ → .github/skills/
     const scriptsSrc = path.join(destAgents, 'scripts');
     const scriptsDestDir = path.join(gitHubDir, 'scripts');
     if (await fs.pathExists(scriptsSrc)) {
         await fs.move(scriptsSrc, scriptsDestDir, { overwrite: true });
+        const pyFiles = (await fs.readdir(scriptsDestDir)).filter(f => f.endsWith('.py'));
+        for (const pyFile of pyFiles) {
+            const pyPath = path.join(scriptsDestDir, pyFile);
+            let pyContent = await fs.readFile(pyPath, 'utf8');
+            pyContent = pyContent.replace(/\.agents\/skills\//g, '.github/skills/');
+            await fs.writeFile(pyPath, pyContent);
+        }
     }
 
     // Limpeza: remover a pasta .agents/ já migrada

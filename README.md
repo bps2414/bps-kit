@@ -42,7 +42,7 @@ npx bps-kit@latest --upgrade
 ### ⚡ O que acontece após a instalação? (VS Code / Copilot)
 Se você adicionou a flag `--vscode`, a arquitetura compilada será organicamente moldada para as regras da nuvem do GitHub (`.github/`):
 - O manifesto base (GEMINI.md) e o routing (AGENTS.md) serão exportados para `.github/instructions/` como arquivos `.instructions.md` com `applyTo: "**"`.
-- As Skills ativas são preservadas integralmente em `.copilot-skills/` protegendo o ciclo de vida e evitando sobrecarga de tokens.
+- As Skills ativas são preservadas integralmente em `.github/skills/` protegendo o ciclo de vida e evitando sobrecarga de tokens.
 - As 22 Personas são mapeadas individualmente em `.github/agents/*.agent.md` — com frontmatter Copilot nativo.
 - As Workflows são convertidas em Copilot Prompts em `.github/prompts/*.prompt.md`.
 - A gigantesca Vault contendo +1000 skills inativas será armazenada inteligentemente em isolamento (`.copilot-vault/`), salvando permanentemente seu limite de Chat no VS Code de travar.

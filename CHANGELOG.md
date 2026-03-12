@@ -5,6 +5,15 @@ Todas as mudanças notáveis ​​neste projeto serão documentadas neste arqui
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), 
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.5.1] - 2026-03-12
+### Modificado
+- **Skills ativas agora vão para `.github/skills/`** ao usar `--vscode`, em vez de `.copilot-skills/` — alinhado com a convenção nativa do GitHub Copilot (dentro de `.github/`).
+  - `applyPathReplacements()`: regex `.agents/skills/` → `.github/skills/` atualizado nas 3 cópias do converter.
+  - Scripts Python (`checklist.py`, `verify_all.py`) têm referências internas `.agents/skills/` reescritas para `.github/skills/` automaticamente ao serem movidos para `.github/scripts/`.
+- **`cli.js`**: Texto de help atualizado: `.copilot-skills/` → `.github/skills/`.
+- **`README.md`**: Referência de destino das skills atualizada.
+- **`.gitignore`**: Entrada stale `.copilot-skills/` removida (coberta por `.github/`).
+
 ## [1.5.0] - 2026-03-12
 ### Modificado
 - **Migração estrutural completa para GitHub Copilot**: A conversão `--vscode` agora segue rigorosamente a arquitetura nativa do Copilot:
