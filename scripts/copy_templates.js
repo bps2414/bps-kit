@@ -39,7 +39,8 @@ const NORMAL_SKILLS = [
     "lint-and-validate", "vulnerability-scanner", "performance-profiling", "senior-fullstack",
     "micro-saas-launcher", "design-md", "enhance-prompt", "react-components",
     "n8n-mcp-tools-expert", "n8n-workflow-patterns", "n8n-expression-syntax",
-    "n8n-node-configuration", "n8n-validation-expert", "n8n-code-javascript", "n8n-code-python"
+    "n8n-node-configuration", "n8n-validation-expert", "n8n-code-javascript", "n8n-code-python",
+    "stitch-loop"
 ];
 
 const EXTRA_SKILLS = [
@@ -50,7 +51,7 @@ const EXTRA_SKILLS = [
     "nodejs-best-practices", "microservices-patterns", "postgres-best-practices",
     "sql-optimization-patterns", "cloud-architect", "deployment-engineer", "playwright-skill",
     "seo-content-writer", "growth-engine", "software-architecture", "domain-driven-design",
-    "code-reviewer", "stitch-loop"
+    "code-reviewer"
 ];
 
 async function copyTemplates() {

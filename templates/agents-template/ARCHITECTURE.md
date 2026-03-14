@@ -115,12 +115,13 @@ Skills availability depends on the installed profile (`basic`, `normal`, or `ext
 | `senior-fullstack`        | Full-stack expertise           |
 | `seo-fundamentals`        | SEO, Core Web Vitals           |
 | `stripe-integration`      | Payment processing             |
+| `stitch-loop`             | Stitch design loop             |
 | `tailwind-patterns`       | Tailwind CSS v4                |
 | `test-driven-development` | TDD workflow                   |
 | `testing-patterns`        | Jest, Vitest, strategies       |
 | `vercel-deployment`       | Vercel deploy workflows        |
 
-### Extra Profile (adds ~27 more skills)
+### Extra Profile (adds ~26 more skills)
 
 | Skill                          | Description               |
 | ------------------------------ | ------------------------- |
@@ -146,7 +147,6 @@ Skills availability depends on the installed profile (`basic`, `normal`, or `ext
 | `seo-content-writer`           | SEO content               |
 | `software-architecture`        | System design patterns    |
 | `sql-optimization-patterns`    | SQL optimization          |
-| `stitch-loop`                  | Stitch design loop        |
 | `threat-modeling-expert`       | Threat modeling           |
 | `top-web-vulnerabilities`      | OWASP vulnerabilities     |
 | `ui-ux-designer`               | UI/UX design              |

@@ -1,6 +1,6 @@
 {
   "name": "bps-kit",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "BPS Kit - The Ultimate Antigravity Brain",
   "bin": {
     "bps-kit": "./bin/cli.js"

@@ -98,7 +98,7 @@ If the user wants to add more pages or extract the design system:
 1. **Extract design system:** Run `design-md` skill to create `DESIGN.md` from the built site
 2. **Generate new pages:** Use `enhance-prompt` to polish the prompt, then generate via Stitch MCP
 3. **Convert to React:** Use `react-components` skill to convert Stitch HTML into modular components
-4. **Autonomous loop:** (Extra profile only) Use `stitch-loop` for multi-page autonomous generation
+4. **Autonomous loop:** (Normal profile+) Use `stitch-loop` for multi-page autonomous generation
 
 ## Integration Notes
 
@@ -119,4 +119,4 @@ If the user wants to add more pages or extract the design system:
 
 **Autonomous multi-page:**
 > "Constrói 5 páginas pro meu site usando Stitch em loop"
-→ Uses `stitch-loop` skill (Extra profile) for autonomous baton-passing generation
+→ Uses `stitch-loop` skill (Normal profile+) for autonomous baton-passing generation

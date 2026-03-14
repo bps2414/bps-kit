@@ -77,7 +77,7 @@ O **BPS Kit** integra o ecossistema **[Stitch Skills](https://github.com/google-
 | `enhance-prompt` | `--normal` | Elevação e refinamento de prompts criativos |
 | `react-components` | `--normal` | Componentes React com padrões premium de UI |
 | `remotion` | Vault | Animações e vídeos programáticos com Remotion |
-| `stitch-loop` | `--extra` | Loop criativo de design iterativo |
+| `stitch-loop` | `--normal` | Loop criativo de design iterativo |
 
 ---
 
